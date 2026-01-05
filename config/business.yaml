@@ -1,0 +1,11 @@
+business_id: astro_burger
+currency: MXN
+
+pricing:
+  max_price_change_pct: 0.15
+  min_margin_pct: 0.55
+
+costs:
+  confidence:
+    high: 1.0
+    low: 0.85

@@ -1,0 +1,24 @@
+pos_sales:
+  required_columns:
+    - foliocuenta
+    - orden
+    - fechaapertura
+    - descripcion
+    - cantidad
+    - descuento
+    - importe
+
+daily_cuts:
+  required_columns:
+    - fecha
+    - ventas_efectivo
+    - ventas_tarjeta
+    - ventas_app
+    - gastos_caja
+    - ventas_sistema
+
+date_rules:
+  accepted_formats:
+    - "%Y-%m-%d"
+    - "%d-%m-%y"
+    - "%d-%m-%Y"
