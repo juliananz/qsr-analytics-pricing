@@ -1,0 +1,35 @@
+product_code,ingredient_name,quantity,unit,notes,active
+burger_cheese,Pan Hamburguesa,1,unit,,1
+burger_cheese,Carne Res (Paq C/60 pz),1,unit,,1
+burger_cheese,Queso Rebanada Amarillo Caja c/400 pz,1,unit,,1
+
+burger_double_cheese,Pan Hamburguesa,1,unit,,1
+burger_double_cheese,Carne Res (Paq C/60 pz),2,unit,,1
+burger_double_cheese,Queso Rebanada Amarillo Caja c/400 pz,2,unit,,1
+
+burger_plain,Pan Hamburguesa,1,unit,,1
+burger_plain,Carne Res (Paq C/60 pz),1,unit,no cheese,1
+
+burger_chicken,Pan Hamburguesa,1,unit,,1
+burger_chicken,Pollo pieza,1,unit,,1
+
+burger_chicken_double,Pan Hamburguesa,1,unit,,1
+burger_chicken_double,Pollo pieza,2,unit,,1
+
+hotdog,Pan Hotdog,1,unit,,1
+hotdog,Carne Res (Paq C/60 pz),1,unit,sausage proxy,1
+
+torta_pork,Pan Torta,1,unit,,1
+torta_pork,Pierna (Bolsa c/10 rac),1,unit,,1
+
+torta_beef,Pan Torta,1,unit,,1
+torta_beef,Ternera (Bolsa c/10 rac),1,unit,,1
+
+palomas_pork,Pierna (Bolsa c/10 rac),1,unit,4 tacos total,1
+palomas_beef,Ternera (Bolsa c/10 rac),1,unit,4 tacos total,1
+
+tornillos,Tornillos (Bolsa c/7 ordenes),1,portion,,1
+
+astropapa,Mantequilla,0.1,portion,shared portion,1
+astropapa,Queso en Barra 907g,0.15,portion,,1
+astropapa,Crema 250g,0.2,portion,,1

@@ -1,0 +1,34 @@
+raw_product_name,product_code,mapping_confidence,notes,active
+HAMBURGUESA CON QUESO,burger_cheese,high,,1
+PAPAS FRANCESAS,fries_full,high,,1
+ASTROBURGUER, burger_double_cheese, high,,1
+REFRESCO, soda, high,,1
+TORTA DE PIERNA, torta_pork, high,,1
+ASTROPAPA, astropapa, high,,1
+HOT DOG, hotdog,high,,1
+HAMBURGUESA SENCILLA, burger_plain,high,,1
+1/2 ORDEN PAPAS, fries_half, high,,1
+TORNILLOS, tornillos, high,,1
+HAMBURGUESA DE POLLO, burger_chicken, high,,1
+TORTA TERNERA, torta_beef, high,,1
+BROWNIE, brownie,high,,1
+HAMBURGUESA CON 2 CARNES, burger_plain_double,high,,1
+PALOMAS TERNERA, palomas_beef,high,,1
+EXTRA AGUACATE, extra_avocado,high,,1
+PALOMAS PIERNA, palomas_pork, high,,1
+EXTRA CARNE, extra_meat,high,,1
+AGUA NATURAL, soda,high,,1
+EXTRA QUESO, extra_cheese,high,,1
+EXTRA REBANADA DE QUESO, extra_cheese_slice,high,,1
+FUZE TEA, soda,high,,1
+COCA LIGHT, soda,high,,1
+DELAWARE PUNCH, soda,high,,1
+EXTRA PEPINILLOS, extra_pickles, high,,1
+ASTROPOLLO, burger_chicken_double,high,,1
+EXTRA QUESO ASTROPAPA, extra_cheese,high,,1
+COCA REGULAR, soda,high,,1
+EXTRA POLLO, extra_chicken,high,,1
+FRESCA, soda,high,,1
+FANTA,soda,high,,1
+SPRITE,soda,high,,1
+SIDRAL MUNDET,soda,high,,1

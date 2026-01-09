@@ -1,0 +1,15 @@
+product_code,pos_name,product_type,category,active
+burger_cheese,Hamburguesa con queso,base,burgers,1
+burger_double,Astroburger (Hamburguesa doble),base,burgers,1
+burger_chicken,Hamburguesa de pollo,base,burgers,1
+hotdog,Hot Dog,base,hotdogs,1
+fries_full,Orden de papas,base,fries,1
+fries_half,Media orden de papas,base,fries,1
+astropapa,Astropapa,base,specials,1
+tornillos,Tornillos,base,specials,1
+torta,Torta de pierna o ternera,base,tortas,1
+palomas,Palomas de pierna o ternera (orden de 4 tacos),base,tortas,1
+soda,Refrescos,drink,drinks,1
+brownie,Brownie,base,desserts,1
+extra_meat,Extra carne,extra,extras,1
+extra_avocado,Extra aguacate,extra,extras,1
