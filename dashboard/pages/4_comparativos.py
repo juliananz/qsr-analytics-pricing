@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import timedelta
+import plotly.graph_objects as go
 
 # =================================================
 # Configuración general
@@ -36,6 +37,7 @@ cutoff = st.date_input(
 
 cutoff = pd.to_datetime(cutoff)
 df = df[df["sale_date"] <= cutoff]
+cutoff_doy = cutoff.timetuple().tm_yday
 
 current_year = cutoff.year
 current_month = cutoff.month
@@ -50,7 +52,8 @@ df["year"] = df["sale_date"].dt.year
 df["day_of_year"] = df["sale_date"].dt.dayofyear
 
 ytd = (
-    df.groupby(["year", "day_of_year"])["net_amount"]
+    df[df["day_of_year"] <= cutoff_doy]
+    .groupby(["year", "day_of_year"])["net_amount"]
     .sum()
     .groupby(level=0)
     .cumsum()
@@ -92,10 +95,13 @@ else:
 # -----------------------------
 # Bullets numéricos
 # -----------------------------
-st.markdown("### Resumen al día de hoy")
+st.markdown("### Este año vs años anteriores")
 
 def ytd_total(year):
-    return df[df["year"] == year]["net_amount"].sum()
+    return df[
+        (df["year"] == year) &
+        (df["day_of_year"] <= cutoff_doy)
+    ]["net_amount"].sum()
 
 cols = st.columns(3)
 
@@ -117,7 +123,18 @@ cols[2].metric(
 # =================================================
 # B. Mes actual vs mismo mes años anteriores
 # =================================================
-st.subheader(f"{current_month_name} vs {current_month_name.lower()}es anteriores")
+
+# Nombres de meses en español
+month_names = {
+    1: ("enero", "eneros"), 2: ("febrero", "febreros"), 3: ("marzo", "marzos"),
+    4: ("abril", "abriles"), 5: ("mayo", "mayos"), 6: ("junio", "junios"),
+    7: ("julio", "julios"), 8: ("agosto", "agostos"), 9: ("septiembre", "septiembres"),
+    10: ("octubre", "octubres"), 11: ("noviembre", "noviembres"), 12: ("diciembre", "diciembres")
+}
+
+month_singular, month_plural = month_names[current_month]
+
+st.subheader(f"Este {month_singular} vs {month_plural} anteriores")
 
 month_df = df[df["sale_date"].dt.month == current_month].copy()
 month_df["day"] = month_df["sale_date"].dt.day
@@ -154,52 +171,105 @@ if pivot_month.empty:
 else:
     st.line_chart(pivot_month)
 
+# -----------------------------
+# Bullets numéricos mensuales
+# -----------------------------
+st.markdown(f"### Este {month_singular} vs {month_plural} anteriores")
+
+def month_total(year):
+    return df[
+        (df["year"] == year) &
+        (df["sale_date"].dt.month == current_month) &
+        (df["sale_date"].dt.day <= cutoff.day)
+    ]["net_amount"].sum()
+
+cols_month = st.columns(3)
+
+if len(last_two_years) == 2:
+    cols_month[0].metric(
+        f"{last_two_years[0]}",
+        f"${month_total(last_two_years[0]):,.0f}"
+    )
+    cols_month[1].metric(
+        f"{last_two_years[1]}",
+        f"${month_total(last_two_years[1]):,.0f}"
+    )
+
+cols_month[2].metric(
+    f"{current_year}",
+    f"${month_total(current_year):,.0f}"
+)
+
 # =================================================
 # C. Semana actual vs semana pasada (barras lado a lado)
 # =================================================
-st.subheader("Semana actual vs semana pasada")
 
-df["weekday"] = df["sale_date"].dt.weekday  # lunes = 0
+st.subheader("Esta semana vs semana pasada")
 
-current_week_start = cutoff - timedelta(days=cutoff.weekday())
-prev_week_start = current_week_start - timedelta(days=7)
+# Calcular inicio de semana actual (lunes)
+days_since_monday = cutoff.weekday()
+week_start = cutoff - timedelta(days=days_since_monday)
 
+# Definir semana actual (solo hasta el día de corte)
 current_week = df[
-    (df["sale_date"] >= current_week_start) &
+    (df["sale_date"] >= week_start) &
     (df["sale_date"] <= cutoff)
-]
+].copy()
+current_week["weekday"] = current_week["sale_date"].dt.weekday
+
+# Definir semana pasada (solo hasta el mismo día de la semana)
+prev_week_start = week_start - timedelta(days=7)
+prev_week_end = prev_week_start + timedelta(days=days_since_monday)
 
 prev_week = df[
     (df["sale_date"] >= prev_week_start) &
-    (df["sale_date"] <= prev_week_start + timedelta(days=cutoff.weekday()))
-]
+    (df["sale_date"] <= prev_week_end)
+].copy()
+prev_week["weekday"] = prev_week["sale_date"].dt.weekday
 
 week_compare = pd.DataFrame({
     "Semana pasada": prev_week.groupby("weekday")["net_amount"].sum(),
-    "Semana actual": current_week.groupby("weekday")["net_amount"].sum()
+    "Esta semana": current_week.groupby("weekday")["net_amount"].sum()
 }).fillna(0)
 
-week_compare.index = [
-    "Lunes", "Martes", "Miércoles",
-    "Jueves", "Viernes", "Sábado", "Domingo"
-][:len(week_compare)]
+# Mapear números a nombres de días
+day_names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+week_compare.index = week_compare.index.map(lambda x: day_names[x])
 
-if week_compare.empty:
-    st.warning("No hay datos suficientes para comparar semanas.")
-else:
-    st.bar_chart(week_compare)
+fig = go.Figure()
+
+fig.add_bar(
+    x=week_compare.index,
+    y=week_compare["Semana pasada"],
+    name="Semana pasada",
+    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
+)
+
+fig.add_bar(
+    x=week_compare.index,
+    y=week_compare["Esta semana"],
+    name="Esta semana",
+    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
+)
+
+fig.update_layout(
+    barmode="group",
+    xaxis_title="Día",
+    yaxis_title="Ventas",
+    legend_title="Periodo",
+    height=350
+)
+
+st.plotly_chart(fig, width="stretch")
 
 # -----------------------------
 # Interpretación automática
 # -----------------------------
-current_total = week_compare["Semana actual"].sum()
+current_total = week_compare["Esta semana"].sum()
 prev_total = week_compare["Semana pasada"].sum()
 
-if prev_total > 0:
-    diff_pct = (current_total - prev_total) / prev_total * 100
-    if diff_pct > 3:
-        st.success(f"Esta semana va {diff_pct:.1f}% arriba vs la semana pasada.")
-    elif diff_pct < -3:
-        st.warning(f"Esta semana va {abs(diff_pct):.1f}% abajo vs la semana pasada.")
-    else:
-        st.info("Esta semana va similar a la semana pasada.")
+# Nombres de días en español
+weekday_names = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+current_weekday_name = weekday_names[cutoff.weekday()]
+
+st.info(f"Hasta el {current_weekday_name} de la semana pasada había ventas de \${prev_total:,.0f}, esta semana llevas \${current_total:,.0f}")
