@@ -33,3 +33,8 @@ tornillos,Tornillos (Bolsa c/7 ordenes),1,portion,,1
 astropapa,Mantequilla,0.1,portion,shared portion,1
 astropapa,Queso en Barra 907g,0.15,portion,,1
 astropapa,Crema 250g,0.2,portion,,1
+
+fries_full,Papas Francesas,1,unit,side,1
+fries_half,Papas Media Orden,1,unit,side,1
+
+extra_cheese,Queso en Barra 907g,0.125,portion,extra cheese portion,1

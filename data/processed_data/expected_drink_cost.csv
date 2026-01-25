@@ -1,0 +1,2 @@
+component_code,expected_unit_cost,cost_confidence,method
+drink_expected,19.37,high,purchase_weighted_average

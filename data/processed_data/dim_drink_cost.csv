@@ -1,0 +1,16 @@
+drink_code,raw_product_name,drink_type,unit_cost,active 
+soda_light,COCA COLA LIGHT,soda,20.33,1
+soda_coke,COCA COLA,soda,20.33,1
+soda_fanta,FANTA,soda,19.45,1
+soda_sprite,SPRITE,soda,19.45,1
+soda_fresca,FRESCA,soda,19.45,1
+water_ciel,CIEL,water,11.45,1
+soda_fuze_durazno,FUZE TEA DURAZNO,soda,18.75,1
+soda_fuze_frutosrojos,FUZE TEA FRUTOS ROJOS,soda,18.75,1
+soda_zero,COCA COLA ZERO,soda,20.33,1
+water_horchata,AGUA HORCHATA,water,15,1
+water_jamaica,AGUA JAMAICA,water,15,1
+water_jamaica_guayaba,AGUA JAMAICA GUAYABA,water,15,1
+water_pepino_limon,AGUA PEPINO LIMON,water,15,1
+water_limon_chia,AGUA LIMON CHIA,water,15,1
+water_tamarindo,AGUA TAMARINDO,water,15,1

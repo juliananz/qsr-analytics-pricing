@@ -1,4 +1,4 @@
-raw_product_name,product_code,mapping_confidence,notes,active
+raw_product_name,product_code,mapping_confidence,notes,active,bundle_code
 HAMBURGUESA CON QUESO,burger_cheese,high,,1
 PAPAS FRANCESAS,fries_full,high,,1
 ASTROBURGUER, burger_double_cheese, high,,1
@@ -32,3 +32,22 @@ FRESCA, soda,high,,1
 FANTA,soda,high,,1
 SPRITE,soda,high,,1
 SIDRAL MUNDET,soda,high,,1
+PAQUETE 1 (HAMBURGUESA CON QUESO),,high,,1,bundle_1
+PAQUETE 2: ASTROBURGUER,,high,,1,bundle_2
+PAQUETE 3: 2 HAMBURGUESAS CON QUESO,,high,,1,bundle_3
+PAQUETE 5: 2 ASTROBURGUER,,high,,1,bundle_5
+PAQUETE 6: 1 TORTA PIERNA,,high,,1,bundle_6_pork
+PAQUETE 8: HOT DOG,,high,,1,bundle_8
+PAQUETE 6: 1 TORTA TERNERA,,high,,1,bundle_6_beef
+PAQUETE 7: TORNILLOS,,high,,1,bundle_7
+PAQUETE 9: ASTROPAPA,,high,,1,bundle_9
+PAQUETE 10: HAMBURGUESA POLLO,,high,,1,bundle_10
+PAQUETE 4: 2 TORTAS PIERNA,,high,,1,bundle_4_pork_pork
+PAQUETE FAMILIAR,,high,,1,bundle_11
+PAQUETE 4: 2 TORTAS TERNERA,,high,,1,bundle_4_beef_beef
+PAQUETE 12: ASTROBURGER + SENCILLA QUESO,,high,,1,bundle_12
+PAQUETE4:2 TORTAS MIXTA,,high,,1,bundle_4_pork_beef
+PAQUETE 12: ASTROPOLLO,,high,,1,bundle_12
+PAQUETE 13: 2 HAMBURGUESAS POLLO QUESO,,high,,1,bundle_13
+PAQUETE 15: 2 ASTROPOLLOS,,high,,1,bundle_15
+PAQUETE 16: ASTROPOLLO,,high,,1,bundle_16
