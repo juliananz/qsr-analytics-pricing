@@ -1,108 +1,120 @@
 import pandas as pd
 from pathlib import Path
 
-ANALYTICS_DIR = Path("data/analytics")
-RAW_DIR = Path("data/raw_data")
+# =========================
+# Paths
+# =========================
+HIST_FILE = Path("data/analytics/fact_sales.parquet")
+RAW_FILE = Path("data/raw_data/comandas.xlsx")
+OUTPUT_FILE = Path("data/analytics/fact_sales.parquet")
 
-PARQUET_FILES = [
-    ANALYTICS_DIR / "ventas_2022.parquet",
-    ANALYTICS_DIR / "ventas_2023.parquet",
-    ANALYTICS_DIR / "ventas_2024.parquet",
-    ANALYTICS_DIR / "ventas_2025.parquet",
+# =========================
+# Columnas esperadas del POS
+# =========================
+COLS = [
+    "foliocuenta",
+    "orden",
+    "fechaapertura",
+    "descripcion",
+    "cantidad",
+    "descuento",
+    "importe"
 ]
 
-COMANDAS_FILE = RAW_DIR / "comandas.xlsx"
-OUTPUT_FILE = ANALYTICS_DIR / "fact_sales_raw.parquet"
-
-
-def load_historical_parquets(files):
-    frames = []
-    for f in files:
-        if not f.exists():
-            raise FileNotFoundError(f"Missing parquet file: {f}")
-        df = pd.read_parquet(f)
-        df["fechaapertura"] = pd.to_datetime(df["fechaapertura"])
-        frames.append(df)
-
-    hist = pd.concat(frames, ignore_index=True)
-    hist["sale_date"] = hist["fechaapertura"].dt.date
-    return hist
-
-
-def load_comandas(path):
-    if not path.exists():
-        print("No comandas.xlsx found. Skipping.")
-        return None
-
-    df = pd.read_excel(path)
-    columnas_importantes = [
-        "foliocuenta",
-        "orden",
-        "fechaapertura",
-        "descripcion",
-        "cantidad",
-        "descuento",
-        "importe",
-    ]
-
-    df = df[columnas_importantes].copy()
-    df["fechaapertura"] = pd.to_datetime(df["fechaapertura"])
-    df["sale_date"] = df["fechaapertura"].dt.date
-    return df
-
-
 def main():
-    print("Loading historical parquet sales...")
-    hist = load_historical_parquets(PARQUET_FILES)
+    # -------------------------------------------------
+    # 1. Cargar histórico
+    # -------------------------------------------------
+    print("Loading historical sales...")
+    if HIST_FILE.exists():
+        hist = pd.read_parquet(HIST_FILE)
 
-    hist_dates = set(hist["sale_date"])
+        # Asegurar tipo correcto
+        hist["sale_date"] = pd.to_datetime(hist["sale_date"]).dt.normalize()
+
+        existing_days = set(hist["sale_date"].dt.date.unique())
+
+        print(
+            f"Historical range: "
+            f"{min(existing_days)} -> {max(existing_days)} "
+            f"({len(existing_days)} days)"
+        )
+    else:
+        hist = pd.DataFrame()
+        existing_days = set()
+        print("No historical file found. Starting fresh.")
+
+    # -------------------------------------------------
+    # 2. Cargar archivo nuevo del POS
+    # -------------------------------------------------
+    print("Loading new POS file...")
+    raw = pd.read_excel(RAW_FILE)
+    raw = raw[COLS].copy()
+
+    # Normalizar fecha (Timestamp, no datetime.date)
+    raw["sale_date"] = pd.to_datetime(raw["fechaapertura"]).dt.normalize()
+
+    incoming_days = set(raw["sale_date"].dt.date.unique())
+
+    # -------------------------------------------------
+    # 3. Detectar días realmente nuevos
+    # -------------------------------------------------
+    new_days = sorted(incoming_days - existing_days)
+
+    if not new_days:
+        print("No new days detected. Nothing to add.")
+        return
+
     print(
-        f"Historical range: {min(hist_dates)} → {max(hist_dates)} "
-        f"({len(hist_dates)} unique days)"
+        f"New days detected: "
+        f"{new_days[0]} -> {new_days[-1]} "
+        f"({len(new_days)} days)"
     )
 
-    comandas = load_comandas(COMANDAS_FILE)
+    # -------------------------------------------------
+    # 4. Filtrar solo días nuevos
+    # -------------------------------------------------
+    raw_new = raw[raw["sale_date"].dt.date.isin(new_days)].copy()
 
-    if comandas is not None:
-        last_hist_date = max(hist_dates)
+    # -------------------------------------------------
+    # 5. Normalizar columnas finales
+    # -------------------------------------------------
+    raw_new = raw_new.rename(columns={
+        "descripcion": "product_name",
+        "cantidad": "quantity",
+        "importe": "net_amount"
+    })
 
-        comandas_validas = comandas[comandas["sale_date"] > last_hist_date]
+    raw_new["quantity"] = raw_new["quantity"].astype(float)
+    raw_new["net_amount"] = raw_new["net_amount"].astype(float)
 
-        if comandas_validas.empty:
-            print(
-                f"No new days found in comandas.xlsx "
-                f"Last historical date: {last_hist_date}"
-            )
-            combined = hist
-            all_dates = hist_dates
-        
-        else:
-            print(
-                f"Adding new sales from comandas.xlsx starting at "
-                f"{comandas_validas['sale_date'].min()}"
-            )    
-            combined = pd.concat([hist, comandas_validas], ignore_index=True)
-            all_dates=hist_dates | set(comandas_validas["sale_date"])
+    # -------------------------------------------------
+    # 6. Concatenar histórico + nuevo
+    # -------------------------------------------------
+    if hist.empty:
+        combined = raw_new.copy()
     else:
-        combined = hist
-        all_dates = hist_dates
+        combined = pd.concat([hist, raw_new], ignore_index=True)
 
-    # Verificar huecos
-    sorted_dates = sorted(all_dates)
-    missing_days = []
-    for i in range(1, len(sorted_dates)):
-        if (sorted_dates[i] - sorted_dates[i - 1]).days > 1:
-            missing_days.append((sorted_dates[i - 1], sorted_dates[i]))
+    # -------------------------------------------------
+    # 7. Ordenar (ya no hay mezcla de tipos)
+    # -------------------------------------------------
+    combined = combined.sort_values(
+        ["sale_date", "foliocuenta", "orden"]
+    )
 
-    if missing_days:
-        print("WARNING: Missing days detected:")
-        for d1, d2 in missing_days[:5]:
-            print(f"  Gap between {d1} and {d2}")
-
-    print(f"Writing consolidated fact_sales_raw.parquet ({len(combined):,} rows)")
+    # -------------------------------------------------
+    # 8. Guardar
+    # -------------------------------------------------
     combined.to_parquet(OUTPUT_FILE, index=False)
-    print("Done.")
 
+    print(
+        f"Wrote fact_sales.parquet with "
+        f"{combined['sale_date'].nunique()} unique days."
+    )
 
+# =========================
+# Entry point
+# =========================
 if __name__ == "__main__":
     main()
