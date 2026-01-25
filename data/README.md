@@ -5,7 +5,7 @@ This folder contains raw, immutable data exports.
 ## Sources
 
 ### 1. POS Sales Export
-- Format: CSV
+- Format: XLSX
 - One row per ordered item
 - Extracted manually from POS system
 
