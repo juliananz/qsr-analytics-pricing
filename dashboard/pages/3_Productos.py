@@ -1,8 +1,9 @@
 import streamlit as st
 import pandas as pd
+from datetime import timedelta
 
-st.set_page_config(page_title="Paquetes", layout="centered")
-st.title("📦 Paquetes")
+st.set_page_config(page_title="Productos", layout="centered")
+st.title("📦 Productos")
 
 # =================================================
 # Carga de datos
@@ -13,15 +14,7 @@ def load_data():
     df["sale_date"] = pd.to_datetime(df["sale_date"])
     return df
 
-@st.cache_data
-def load_bundle_mapping():
-    mapping = pd.read_csv("data/processed_data/product_name_mapping.csv")
-    # Crear diccionario: bundle_code -> raw_product_name
-    bundle_dict = mapping[mapping["bundle_code"].notna()].set_index("bundle_code")["raw_product_name"].to_dict()
-    return bundle_dict
-
 df = load_data()
-bundle_names = load_bundle_mapping()
 
 # =================================================
 # Filtro de periodo
@@ -31,29 +24,28 @@ st.subheader("Periodo de análisis")
 max_date = df["sale_date"].max()
 
 # Determinar periodo por defecto
-if 'filter_option_bundles' not in st.session_state:
-    st.session_state.filter_option_bundles = "Todo"
+if 'filter_option_products' not in st.session_state:
+    st.session_state.filter_option_products = "Todo"
 
 filter_option = st.radio(
     "Selecciona periodo",
     options=["Última semana", "Últimas 2 semanas", "Último mes", "Todo", "Personalizado"],
-    index=["Última semana", "Últimas 2 semanas", "Último mes", "Todo", "Personalizado"].index(st.session_state.filter_option_bundles),
+    index=["Última semana", "Últimas 2 semanas", "Último mes", "Todo", "Personalizado"].index(st.session_state.filter_option_products),
     horizontal=True,
-    label_visibility="collapsed",
-    key="bundle_filter_radio"
+    label_visibility="collapsed"
 )
 
-st.session_state.filter_option_bundles = filter_option
+st.session_state.filter_option_products = filter_option
 
 # Calcular fechas según opción
 if filter_option == "Última semana":
-    start_date = max_date - pd.Timedelta(days=7)
+    start_date = max_date - timedelta(days=7)
     end_date = max_date
 elif filter_option == "Últimas 2 semanas":
-    start_date = max_date - pd.Timedelta(days=14)
+    start_date = max_date - timedelta(days=14)
     end_date = max_date
 elif filter_option == "Último mes":
-    start_date = max_date - pd.Timedelta(days=30)
+    start_date = max_date - timedelta(days=30)
     end_date = max_date
 elif filter_option == "Todo":
     start_date = df["sale_date"].min()
@@ -68,7 +60,7 @@ else:  # Personalizado
             value=df["sale_date"].min().date(),
             min_value=df["sale_date"].min().date(),
             max_value=max_date.date(),
-            key="bundle_start"
+            key="product_start"
         )
     
     with col_custom2:
@@ -77,7 +69,7 @@ else:  # Personalizado
             value=max_date.date(),
             min_value=df["sale_date"].min().date(),
             max_value=max_date.date(),
-            key="bundle_end"
+            key="product_end"
         )
     
     start_date = pd.to_datetime(custom_start)
@@ -91,53 +83,49 @@ st.caption(f"Mostrando datos del {start_date.strftime('%d/%m/%Y')} al {end_date.
 st.divider()
 
 # =================================================
-# Filtrar solo paquetes
+# Flags de calidad
 # =================================================
-bundles = df_filtered[df_filtered["bundle_code"].notna()].copy()
-
-if bundles.empty:
-    st.warning("No hay ventas de paquetes registradas.")
-    st.stop()
-
-# Mapear bundle_code a nombre
-bundles["bundle_name"] = bundles["bundle_code"].map(bundle_names).fillna(bundles["bundle_code"])
+df_filtered["cost_valid"] = (
+    df_filtered["unit_cost"].notna() &
+    (df_filtered["unit_cost"] > 0) &
+    (~df_filtered["cost_estimated"])
+)
 
 # =================================================
 # Resumen
 # =================================================
-total_bundle_sales = bundles["net_amount"].sum()
-total_sales = df_filtered["net_amount"].sum()
+total_products = df_filtered["product_name"].nunique()
+products_with_cost = df_filtered[df_filtered["cost_valid"]]["product_name"].nunique()
 
-bundle_share = total_bundle_sales / total_sales * 100
-
-bundle_units = bundles["quantity"].sum()
+pct_valid = (
+    products_with_cost / total_products * 100
+    if total_products > 0 else 0
+)
 
 # Métricas personalizadas con HTML
 st.markdown(f"""
 <div style="display: flex; gap: 10px; margin-bottom: 20px;">
     <div style="flex: 1; background-color: #f0f2f6; padding: 15px; border-radius: 5px;">
-        <div style="font-size: 14px; color: #31333F;">Ventas en paquetes</div>
-        <div style="font-size: 24px; font-weight: 600; color: #31333F;">${total_bundle_sales:,.0f}</div>
+        <div style="font-size: 14px; color: #31333F;">Productos vendidos</div>
+        <div style="font-size: 24px; font-weight: 600; color: #31333F;">{total_products}</div>
     </div>
     <div style="flex: 1; background-color: #f0f2f6; padding: 15px; border-radius: 5px;">
-        <div style="font-size: 14px; color: #31333F;">Participación paquetes</div>
-        <div style="font-size: 24px; font-weight: 600; color: #31333F;">{bundle_share:.1f}%</div>
+        <div style="font-size: 14px; color: #31333F;">Con costo validado</div>
+        <div style="font-size: 24px; font-weight: 600; color: #31333F;">{pct_valid:.1f}%</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-st.caption(f"Unidades de paquetes vendidas: {bundle_units:,}")
-
 st.divider()
 
 # =================================================
-# Top paquetes por ventas
+# Top productos por ventas
 # =================================================
-st.subheader("Top paquetes por ventas")
+st.subheader("Top productos por ventas")
 
 top_sales = (
-    bundles
-    .groupby("bundle_name")[["quantity", "net_amount"]]
+    df_filtered
+    .groupby("product_name")[["quantity", "net_amount"]]
     .sum()
     .sort_values("net_amount", ascending=False)
     .head(10)
@@ -150,7 +138,7 @@ top_sales_display["quantity"] = top_sales_display["quantity"].apply(lambda x: f"
 top_sales_display["net_amount"] = top_sales_display["net_amount"].apply(lambda x: f"${x:,.2f}")
 
 top_sales_display = top_sales_display.rename(columns={
-    "bundle_name": "Nombre paquete",
+    "product_name": "Producto",
     "quantity": "Cantidad vendida",
     "net_amount": "Ventas"
 })
@@ -162,23 +150,25 @@ st.dataframe(
 )
 
 # =================================================
-# Top paquetes por margen
+# Top productos por margen (solo costo válido)
 # =================================================
-st.subheader("Top paquetes por margen")
+st.subheader("Top productos por margen")
 
-margin_df = (
-    bundles
-    .groupby("bundle_name")[["net_amount", "gross_margin"]]
+margin_df = df_filtered[df_filtered["cost_valid"]].copy()
+
+top_margin = (
+    margin_df
+    .groupby("product_name")[["net_amount", "gross_margin"]]
     .sum()
     .reset_index()
 )
 
-margin_df["margin_pct"] = (
-    margin_df["gross_margin"] / margin_df["net_amount"] * 100
+top_margin["margin_pct"] = (
+    top_margin["gross_margin"] / top_margin["net_amount"] * 100
 )
 
 top_margin = (
-    margin_df
+    top_margin
     .sort_values("gross_margin", ascending=False)
     .head(10)
 )
@@ -190,7 +180,7 @@ top_margin_display["gross_margin"] = top_margin_display["gross_margin"].apply(la
 top_margin_display["margin_pct"] = top_margin_display["margin_pct"].apply(lambda x: f"{x:.2f}%")
 
 top_margin_display = top_margin_display.rename(columns={
-    "bundle_name": "Nombre paquete",
+    "product_name": "Producto",
     "net_amount": "Ventas",
     "gross_margin": "Margen bruto",
     "margin_pct": "(% Margen)"
@@ -203,30 +193,70 @@ st.dataframe(
 )
 
 # =================================================
-# Paquetes a revisar
+# Productos problemáticos
 # =================================================
-st.subheader("Paquetes a revisar")
+st.subheader("Productos a revisar")
 
-low_margin = margin_df.query("margin_pct < 40").sort_values("margin_pct")
+# Margen negativo
+neg_margin = (
+    margin_df
+    .groupby("product_name")[["gross_margin"]]
+    .sum()
+    .query("gross_margin < 0")
+    .reset_index()
+)
 
-if low_margin.empty:
-    st.success("Todos los paquetes tienen margen saludable.")
-else:
-    # Formatear y renombrar
-    low_margin_display = low_margin.copy()
-    low_margin_display["net_amount"] = low_margin_display["net_amount"].apply(lambda x: f"${x:,.2f}")
-    low_margin_display["gross_margin"] = low_margin_display["gross_margin"].apply(lambda x: f"${x:,.2f}")
-    low_margin_display["margin_pct"] = low_margin_display["margin_pct"].apply(lambda x: f"{x:.2f}%")
-    
-    low_margin_display = low_margin_display.rename(columns={
-        "bundle_name": "Nombre paquete",
-        "net_amount": "Ventas",
-        "gross_margin": "Margen bruto",
-        "margin_pct": "(% Margen)"
+# Formatear
+if not neg_margin.empty:
+    neg_margin_display = neg_margin.copy()
+    neg_margin_display["gross_margin"] = neg_margin_display["gross_margin"].apply(lambda x: f"${x:,.2f}")
+    neg_margin_display = neg_margin_display.rename(columns={
+        "product_name": "Producto",
+        "gross_margin": "Margen bruto"
     })
-    
-    st.dataframe(
-        low_margin_display,
-        use_container_width=True,
-        hide_index=True
-    )
+else:
+    neg_margin_display = neg_margin
+
+# Costo pendiente
+pending_cost = (
+    df_filtered[~df_filtered["cost_valid"]]
+    .groupby("product_name")["net_amount"]
+    .sum()
+    .reset_index()
+)
+
+# Formatear
+if not pending_cost.empty:
+    pending_cost_display = pending_cost.copy()
+    pending_cost_display["net_amount"] = pending_cost_display["net_amount"].apply(lambda x: f"${x:,.2f}")
+    pending_cost_display = pending_cost_display.rename(columns={
+        "product_name": "Producto",
+        "net_amount": "Ventas"
+    })
+    pending_cost_display = pending_cost_display.sort_values("Ventas", ascending=False, key=lambda x: x.str.replace('$', '').str.replace(',', '').astype(float))
+else:
+    pending_cost_display = pending_cost
+
+col3, col4 = st.columns(2)
+
+with col3:
+    st.markdown("**Margen negativo**")
+    if neg_margin.empty:
+        st.success("Ninguno")
+    else:
+        st.dataframe(
+            neg_margin_display,
+            use_container_width=True,
+            hide_index=True
+        )
+
+with col4:
+    st.markdown("**Costo pendiente de validar**")
+    if pending_cost.empty:
+        st.success("Todos con costo válido")
+    else:
+        st.dataframe(
+            pending_cost_display,
+            use_container_width=True,
+            hide_index=True
+        )

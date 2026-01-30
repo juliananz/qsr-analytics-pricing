@@ -6,32 +6,31 @@ OUTPUT_FILE = Path("data/analytics/margin_summary.csv")
 
 
 def main():
-    df = pd.read_parquet(INPUT_FILE)
+    sales = pd.read_parquet(INPUT_FILE)
 
-    # Unificar producto y paquete como item vendible
-    df["item_code"] = df["bundle_code"].fillna(df["product_code"])
+    # Solo ventas con costos válidos
+    sales = sales[sales["cost_applicable"]].copy()
 
-    # Agregación
+    # Excluir ingresos no operativos
+    sales = sales[~sales["non_product_revenue"]]
+
     summary = (
-        df.groupby("item_code")
+        sales
+        .groupby(["product_code", "bundle_code"], dropna=False)
         .agg(
-            total_units_sold=("quantity", "sum"),
-            total_revenue=("net_amount", "sum"),
+            total_sales=("importe", "sum"),
+            total_units=("cantidad", "sum"),
             total_cost=("total_cost", "sum"),
-            total_margin=("gross_margin", "sum"),
-            avg_margin_pct=("gross_margin_pct", "mean"),
+            gross_margin=("gross_margin", "sum"),
         )
         .reset_index()
     )
 
-    # Shares
-    summary["share_of_revenue"] = summary["total_revenue"] / summary["total_revenue"].sum()
-    summary["share_of_margin"] = summary["total_margin"] / summary["total_margin"].sum()
+    summary["gross_margin_pct"] = summary["gross_margin"] / summary["total_sales"]
 
-    # Orden por impacto
-    summary = summary.sort_values("total_margin", ascending=False)
-
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     summary.to_csv(OUTPUT_FILE, index=False)
+
     print(f"Wrote margin_summary.csv ({len(summary)} items)")
 
 

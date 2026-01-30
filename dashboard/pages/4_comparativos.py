@@ -43,82 +43,90 @@ current_year = cutoff.year
 current_month = cutoff.month
 current_month_name = cutoff.strftime("%B").capitalize()
 
-# =================================================
-# A. Ventas acumuladas YTD (gráfica + bullets)
-# =================================================
-st.subheader("Ventas acumuladas del año")
-
+# Preparar datos base
 df["year"] = df["sale_date"].dt.year
 df["day_of_year"] = df["sale_date"].dt.dayofyear
 
-ytd = (
-    df[df["day_of_year"] <= cutoff_doy]
-    .groupby(["year", "day_of_year"])["net_amount"]
-    .sum()
-    .groupby(level=0)
-    .cumsum()
-    .reset_index()
-)
-
 # Años completos (excluye el actual)
-completed_years = sorted(ytd["year"].unique())
+completed_years = sorted(df["year"].unique())
 completed_years = [y for y in completed_years if y < current_year]
 
 # Últimos 2 años completos
-last_two_years = completed_years[-2:]
+last_two_years = completed_years[-2:] if len(completed_years) >= 2 else completed_years
 
-# Promedio histórico (todos menos el actual)
-avg_ytd = (
-    ytd[ytd["year"].isin(completed_years)]
-    .groupby("day_of_year")["net_amount"]
-    .mean()
-    .reset_index()
+# =================================================
+# A. Semana actual vs semana pasada (barras lado a lado)
+# =================================================
+
+st.subheader("Esta semana vs semana pasada")
+
+# Calcular inicio de semana actual (lunes)
+days_since_monday = cutoff.weekday()
+week_start = cutoff - timedelta(days=days_since_monday)
+
+# Definir semana actual (solo hasta el día de corte)
+current_week = df[
+    (df["sale_date"] >= week_start) &
+    (df["sale_date"] <= cutoff)
+].copy()
+current_week["weekday"] = current_week["sale_date"].dt.weekday
+
+# Definir semana pasada (solo hasta el mismo día de la semana)
+prev_week_start = week_start - timedelta(days=7)
+prev_week_end = prev_week_start + timedelta(days=days_since_monday)
+
+prev_week = df[
+    (df["sale_date"] >= prev_week_start) &
+    (df["sale_date"] <= prev_week_end)
+].copy()
+prev_week["weekday"] = prev_week["sale_date"].dt.weekday
+
+week_compare = pd.DataFrame({
+    "Semana pasada": prev_week.groupby("weekday")["net_amount"].sum(),
+    "Esta semana": current_week.groupby("weekday")["net_amount"].sum()
+}).fillna(0)
+
+# Mapear números a nombres de días
+day_names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+week_compare.index = week_compare.index.map(lambda x: day_names[x])
+
+fig = go.Figure()
+
+fig.add_bar(
+    x=week_compare.index,
+    y=week_compare["Semana pasada"],
+    name="Semana pasada",
+    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
 )
-avg_ytd["year"] = "Promedio histórico"
 
-plot_ytd = pd.concat([
-    ytd[ytd["year"].isin(last_two_years + [current_year])],
-    avg_ytd
-])
-
-pivot_ytd = plot_ytd.pivot(
-    index="day_of_year",
-    columns="year",
-    values="net_amount"
+fig.add_bar(
+    x=week_compare.index,
+    y=week_compare["Esta semana"],
+    name="Esta semana",
+    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
 )
 
-if pivot_ytd.empty:
-    st.warning("No hay datos suficientes para mostrar el comparativo anual.")
-else:
-    st.line_chart(pivot_ytd)
+fig.update_layout(
+    barmode="group",
+    xaxis_title="Día",
+    yaxis_title="Ventas",
+    legend_title="Periodo",
+    height=350
+)
+
+st.plotly_chart(fig, width="stretch")
 
 # -----------------------------
-# Bullets numéricos
+# Interpretación automática
 # -----------------------------
-st.markdown("### Este año vs años anteriores")
+current_total = week_compare["Esta semana"].sum()
+prev_total = week_compare["Semana pasada"].sum()
 
-def ytd_total(year):
-    return df[
-        (df["year"] == year) &
-        (df["day_of_year"] <= cutoff_doy)
-    ]["net_amount"].sum()
+# Nombres de días en español
+weekday_names = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+current_weekday_name = weekday_names[cutoff.weekday()]
 
-cols = st.columns(3)
-
-if len(last_two_years) == 2:
-    cols[0].metric(
-        f"{last_two_years[0]}",
-        f"${ytd_total(last_two_years[0]):,.0f}"
-    )
-    cols[1].metric(
-        f"{last_two_years[1]}",
-        f"${ytd_total(last_two_years[1]):,.0f}"
-    )
-
-cols[2].metric(
-    f"{current_year}",
-    f"${ytd_total(current_year):,.0f}"
-)
+st.info(f"Hasta el {current_weekday_name} de la semana pasada había ventas de \${prev_total:,.0f}, esta semana llevas \${current_total:,.0f}")
 
 # =================================================
 # B. Mes actual vs mismo mes años anteriores
@@ -201,75 +209,68 @@ cols_month[2].metric(
 )
 
 # =================================================
-# C. Semana actual vs semana pasada (barras lado a lado)
+# C. Ventas acumuladas YTD (gráfica + bullets)
 # =================================================
+st.subheader("Ventas acumuladas del año")
 
-st.subheader("Esta semana vs semana pasada")
-
-# Calcular inicio de semana actual (lunes)
-days_since_monday = cutoff.weekday()
-week_start = cutoff - timedelta(days=days_since_monday)
-
-# Definir semana actual (solo hasta el día de corte)
-current_week = df[
-    (df["sale_date"] >= week_start) &
-    (df["sale_date"] <= cutoff)
-].copy()
-current_week["weekday"] = current_week["sale_date"].dt.weekday
-
-# Definir semana pasada (solo hasta el mismo día de la semana)
-prev_week_start = week_start - timedelta(days=7)
-prev_week_end = prev_week_start + timedelta(days=days_since_monday)
-
-prev_week = df[
-    (df["sale_date"] >= prev_week_start) &
-    (df["sale_date"] <= prev_week_end)
-].copy()
-prev_week["weekday"] = prev_week["sale_date"].dt.weekday
-
-week_compare = pd.DataFrame({
-    "Semana pasada": prev_week.groupby("weekday")["net_amount"].sum(),
-    "Esta semana": current_week.groupby("weekday")["net_amount"].sum()
-}).fillna(0)
-
-# Mapear números a nombres de días
-day_names = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-week_compare.index = week_compare.index.map(lambda x: day_names[x])
-
-fig = go.Figure()
-
-fig.add_bar(
-    x=week_compare.index,
-    y=week_compare["Semana pasada"],
-    name="Semana pasada",
-    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
+ytd = (
+    df[df["day_of_year"] <= cutoff_doy]
+    .groupby(["year", "day_of_year"])["net_amount"]
+    .sum()
+    .groupby(level=0)
+    .cumsum()
+    .reset_index()
 )
 
-fig.add_bar(
-    x=week_compare.index,
-    y=week_compare["Esta semana"],
-    name="Esta semana",
-    hovertemplate="<b>%{x}</b><br>$%{y:,.0f}<extra></extra>"
+# Promedio histórico (todos menos el actual)
+avg_ytd = (
+    ytd[ytd["year"].isin(completed_years)]
+    .groupby("day_of_year")["net_amount"]
+    .mean()
+    .reset_index()
+)
+avg_ytd["year"] = "Promedio histórico"
+
+plot_ytd = pd.concat([
+    ytd[ytd["year"].isin(last_two_years + [current_year])],
+    avg_ytd
+])
+
+pivot_ytd = plot_ytd.pivot(
+    index="day_of_year",
+    columns="year",
+    values="net_amount"
 )
 
-fig.update_layout(
-    barmode="group",
-    xaxis_title="Día",
-    yaxis_title="Ventas",
-    legend_title="Periodo",
-    height=350
-)
-
-st.plotly_chart(fig, width="stretch")
+if pivot_ytd.empty:
+    st.warning("No hay datos suficientes para mostrar el comparativo anual.")
+else:
+    st.line_chart(pivot_ytd)
 
 # -----------------------------
-# Interpretación automática
+# Bullets numéricos
 # -----------------------------
-current_total = week_compare["Esta semana"].sum()
-prev_total = week_compare["Semana pasada"].sum()
+st.markdown("### Este año vs años anteriores")
 
-# Nombres de días en español
-weekday_names = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
-current_weekday_name = weekday_names[cutoff.weekday()]
+def ytd_total(year):
+    return df[
+        (df["year"] == year) &
+        (df["day_of_year"] <= cutoff_doy)
+    ]["net_amount"].sum()
 
-st.info(f"Hasta el {current_weekday_name} de la semana pasada había ventas de \${prev_total:,.0f}, esta semana llevas \${current_total:,.0f}")
+cols = st.columns(3)
+
+if len(last_two_years) == 2:
+    cols[0].metric(
+        f"{last_two_years[0]}",
+        f"${ytd_total(last_two_years[0]):,.0f}"
+    )
+    cols[1].metric(
+        f"{last_two_years[1]}",
+        f"${ytd_total(last_two_years[1]):,.0f}"
+    )
+
+cols[2].metric(
+    f"{current_year}",
+    f"${ytd_total(current_year):,.0f}"
+)
