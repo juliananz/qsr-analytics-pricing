@@ -1,7 +1,7 @@
 """
 Build fact_sales_margin.parquet
 ================================
-Calcula márgenes de venta con costos unitarios.
+Calcula margenes de venta con costos unitarios.
 
 Schema del output (CONTRATO - NO CAMBIAR):
 - sale_date: datetime64[ns]
@@ -42,18 +42,15 @@ OUTPUT_FILE = Path("data/analytics/fact_sales_margin.parquet")
 # CONFIGURACION DE REGLAS DE NEGOCIO
 # ============================================================
 
-# Ventana de costos válidos (antes de esta fecha no hay costos confiables)
-COST_VALID_FROM = pd.to_datetime("2025-10-01")
-
-# Keywords para clasificación
+# Keywords para clasificacion
 NON_PRODUCT_KEYWORDS = ["ENVIO", "EXCESO", "AJUSTE", "EFECTIVO", "$"]
 DRINK_KEYWORDS = ["REFRESCO", "COCA", "FANTA", "SPRITE", "FUZE", "AGUA"]
 
-# Costos fijos específicos
+# Costos fijos especificos
 AVOCADO_COST = 5.0
 FALLBACK_DRINK_COST = 8.0
 
-# Margen objetivo para estimación de costos
+# Margen objetivo para estimacion de costos
 TARGET_MARGIN_PCT = 0.45  # 45% margen -> costo = precio * (1 - 0.45) = precio * 0.55
 COST_ESTIMATION_MULTIPLIER = 1 - TARGET_MARGIN_PCT  # 0.55
 
@@ -128,7 +125,7 @@ def resolve_unit_cost(
     2. Paquetes -> costo del bundle
     3. Bebidas -> costo esperado
     4. Extra aguacate -> costo fijo
-    5. Producto mapeado -> costo del catálogo
+    5. Producto mapeado -> costo del catalogo
     6. Fallback -> costo estimado basado en margen objetivo
     
     Args:
@@ -141,10 +138,6 @@ def resolve_unit_cost(
         Tuple[float, bool]: (unit_cost, is_estimated)
     """
     name = row["product_name_norm"]
-    
-    # Ventana de costos: antes de esta fecha retornamos 0.0
-    if row["sale_date"] < COST_VALID_FROM:
-        return 0.0, False
     
     # 1. Ingresos no operativos: costo = precio (margen 0)
     if row["non_product_revenue"]:
@@ -190,8 +183,8 @@ def resolve_unit_cost(
 
 def compute_financial_metrics(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Calcula métricas financieras derivadas.
-    Asume que unit_cost ya está resuelto y nunca es NaN.
+    Calcula metricas financieras derivadas.
+    Asume que unit_cost ya esta resuelto y nunca es NaN.
     """
     df = df.copy()
     
@@ -251,7 +244,7 @@ def build_output_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         "non_product_revenue"
     ]
     
-    # Forzar tipos según schema
+    # Forzar tipos segun schema
     output["sale_date"] = pd.to_datetime(output["sale_date"])
     output["product_name"] = output["product_name"].astype(str)
     output["product_code"] = output["product_code"].astype(str)
@@ -277,27 +270,24 @@ def build_output_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 # ============================================================
 
 def print_audit_summary(output: pd.DataFrame) -> None:
-    """Imprime resumen de auditoría"""
+    """Imprime resumen de auditoria"""
     print("\n" + "=" * 60)
     print("AUDIT SUMMARY")
     print("=" * 60)
     
-    # Validación de costos
-    cost_window = output[output["sale_date"] >= COST_VALID_FROM]
-    
     print(f"\nTotal rows: {len(output):,}")
-    print(f"Rows in cost window (>= {COST_VALID_FROM.date()}): {len(cost_window):,}")
+    print(f"Date range: {output['sale_date'].min().date()} -> {output['sale_date'].max().date()}")
     
     # Costos estimados
-    estimated = cost_window["cost_estimated"].sum()
-    est_pct = (estimated / len(cost_window) * 100) if len(cost_window) > 0 else 0
+    estimated = output["cost_estimated"].sum()
+    est_pct = (estimated / len(output) * 100) if len(output) > 0 else 0
     print(f"Estimated costs: {estimated:,} ({est_pct:.1f}%)")
     
     # Ingresos no operativos
     non_product = output["non_product_revenue"].sum()
     print(f"Non-product revenue items: {non_product:,}")
     
-    # Métricas financieras
+    # Metricas financieras
     total_margin = output["gross_margin"].sum()
     total_revenue = output["net_amount"].sum()
     avg_margin_pct = (total_margin / total_revenue * 100) if total_revenue > 0 else 0
@@ -315,6 +305,12 @@ def print_audit_summary(output: pd.DataFrame) -> None:
         print(neg_total.head(5))
     else:
         print("\nAll products have non-negative margins")
+    
+    # Distribucion de costos estimados por revenue
+    if output["cost_estimated"].sum() > 0:
+        est_revenue = output[output["cost_estimated"]]["net_amount"].sum()
+        total_rev = output["net_amount"].sum()
+        print(f"\nEstimated costs represent {est_revenue/total_rev*100:.1f}% of revenue")
     
     print("\n" + "=" * 60)
 
@@ -392,19 +388,18 @@ def main():
     # --------------------------------------------------------
     print("\n[4/6] Resolving unit costs...")
     
-    # Aplicar resolución de costos
+    # Aplicar resolucion de costos
     sales[["unit_cost", "cost_estimated"]] = sales.apply(
         lambda row: resolve_unit_cost(row, product_costs, bundle_costs, expected_drink_cost),
         axis=1,
         result_type="expand"
     )
     
-    # Estadísticas
-    cost_window = sales[sales["sale_date"] >= COST_VALID_FROM]
-    estimated = cost_window["cost_estimated"].sum()
-    est_pct = (estimated / len(cost_window) * 100) if len(cost_window) > 0 else 0
+    # Estadisticas
+    estimated = sales["cost_estimated"].sum()
+    est_pct = (estimated / len(sales) * 100) if len(sales) > 0 else 0
     
-    print(f"  - Items in cost window: {len(cost_window):,}")
+    print(f"  - Total items: {len(sales):,}")
     print(f"  - Estimated costs: {estimated:,} ({est_pct:.1f}%)")
     
     # VALIDACION CRITICA: unit_cost nunca debe ser NaN
