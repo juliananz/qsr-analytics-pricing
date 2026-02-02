@@ -12,5 +12,8 @@ data/analytics/*
 !data/processed/.gitkeep
 !data/analytics/.gitkeep
 
+# Secrets
+.secrets/
+
 # OS
 .DS_Store

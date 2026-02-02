@@ -22,3 +22,13 @@ date_rules:
     - "%Y-%m-%d"
     - "%d-%m-%y"
     - "%d-%m-%Y"
+
+gastos:
+  required_columns:
+    - fecha
+    - descripcion
+    - categoria
+    - monto
+  optional_columns:
+    - proveedor
+    - elaboro

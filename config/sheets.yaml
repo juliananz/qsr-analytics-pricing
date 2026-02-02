@@ -1,0 +1,40 @@
+# Google Sheets Integration Configuration
+# ========================================
+# Maps human-friendly Sheet headers to canonical column names.
+# Only the FIRST non-empty line of each header is used for matching.
+# Accents are PRESERVED (categoría ≠ categoria).
+# Unmapped columns are IGNORED (not an error).
+
+spreadsheet_name: "control_negocio"
+spreadsheet_id: "1pLHT1VzW9yCtC_H0s17E7top3yeaY15u5BOsFpgkQlA"
+
+credentials_path: "D:\\DS\\Astro Burger\\Negocio\\astroburger-a7b14d51c891.json"
+
+sheets:
+  cortes:
+    sheet_name: "Cortes"
+    header_mapping:
+      # Actual headers from Forms/manual entry → canonical names
+      "marca temporal": "fecha"
+      "efectivo": "ventas_efectivo"
+      "tarjeta": "ventas_tarjeta"
+      "apps": "ventas_app"
+      "gastos": "gastos_caja"
+      "ventas sistema": "ventas_sistema"
+      # Ignored columns (mapped to null): contraseña, ventas sistema (imagen),
+      # venta suma, sobrante/faltante, elaboró, comentarios
+
+  gastos:
+    sheet_name: "Gastos"
+    header_mapping:
+      # Actual headers from Forms → canonical names
+      "marca temporal": "fecha"
+      "descripción": "descripcion"
+      "descripcion": "descripcion"
+      "categoría": "categoria"
+      "categoria": "categoria"
+      "proveedor": "proveedor"
+      "monto": "monto"
+      "elaboró": "elaboro"
+      "elaboro": "elaboro"
+      # Ignored: contraseña
