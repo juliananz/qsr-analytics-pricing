@@ -72,3 +72,11 @@ bundle_15,drink_expected,soda_expected,2,1
 bundle_16,product,burger_chicken_double,1,1
 bundle_16,side,fries_full,1,1
 bundle_16,drink_expected,soda_expected,1,1
+
+bundle_palomas_beef,product,palomas_beef,1,1
+bundle_palomas_beef,side,fries_full,1,1
+bundle_palomas_beef,drink_expected,soda_expected,1,1
+
+bundle_palomas_pork,product,palomas_pork,1,1
+bundle_palomas_pork,side,fries_full,1,1
+bundle_palomas_pork,drink_expected,soda_expected,1,1

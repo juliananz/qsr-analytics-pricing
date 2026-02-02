@@ -20,7 +20,7 @@ EXTRA CARNE,extra_meat,high,,1
 AGUA NATURAL,soda,high,,1
 EXTRA QUESO,extra_cheese,high,,1
 EXTRA REBANADA DE QUESO,extra_cheese_slice,high,,1
-FUZE TEAsoda,high,,1
+FUZE TEA,soda,high,,1
 COCA LIGHT,soda,high,,1
 DELAWARE PUNCH,soda,high,,1
 EXTRA PEPINILLOS,extra_pickles,high,,1
@@ -51,3 +51,5 @@ PAQUETE 12: ASTROPOLLO,,high,,1,bundle_12
 PAQUETE 13: 2 HAMBURGUESAS POLLO QUESO,,high,,1,bundle_13
 PAQUETE 15: 2 ASTROPOLLOS,,high,,1,bundle_15
 PAQUETE 16: ASTROPOLLO,,high,,1,bundle_16
+PAQ. DE PALOMAS DE TERNERA,,high,,1,bundle_palomas_beef
+PAQ. DE PALOMAS DE PIERNA,,high,,1,bundle_palomas_pork

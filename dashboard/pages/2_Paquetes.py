@@ -26,7 +26,7 @@ bundle_names = load_bundle_mapping()
 # =================================================
 # Filtro de periodo
 # =================================================
-st.subheader("Periodo de análisis")
+st.subheader("Periodo de analisis")
 
 max_date = df["sale_date"].max()
 
@@ -36,8 +36,8 @@ if 'filter_option_bundles' not in st.session_state:
 
 filter_option = st.radio(
     "Selecciona periodo",
-    options=["Última semana", "Últimas 2 semanas", "Último mes", "Todo", "Personalizado"],
-    index=["Última semana", "Últimas 2 semanas", "Último mes", "Todo", "Personalizado"].index(st.session_state.filter_option_bundles),
+    options=["Ultima semana", "Ultimas 2 semanas", "Ultimo mes", "Todo", "Personalizado"],
+    index=["Ultima semana", "Ultimas 2 semanas", "Ultimo mes", "Todo", "Personalizado"].index(st.session_state.filter_option_bundles),
     horizontal=True,
     label_visibility="collapsed",
     key="bundle_filter_radio"
@@ -45,14 +45,14 @@ filter_option = st.radio(
 
 st.session_state.filter_option_bundles = filter_option
 
-# Calcular fechas según opción
-if filter_option == "Última semana":
+# Calcular fechas segun opcion
+if filter_option == "Ultima semana":
     start_date = max_date - pd.Timedelta(days=7)
     end_date = max_date
-elif filter_option == "Últimas 2 semanas":
+elif filter_option == "Ultimas 2 semanas":
     start_date = max_date - pd.Timedelta(days=14)
     end_date = max_date
-elif filter_option == "Último mes":
+elif filter_option == "Ultimo mes":
     start_date = max_date - pd.Timedelta(days=30)
     end_date = max_date
 elif filter_option == "Todo":
@@ -93,26 +93,42 @@ st.divider()
 # =================================================
 # Filtrar solo paquetes
 # =================================================
-bundles = df_filtered[df_filtered["bundle_code"].notna()].copy()
+# Filtro estricto: bundle_code debe ser NOT NULL y string no vacio
+bundles = df_filtered[
+    df_filtered["bundle_code"].notna() & 
+    (df_filtered["bundle_code"].astype(str).str.strip() != "")
+].copy()
 
 if bundles.empty:
     st.warning("No hay ventas de paquetes registradas.")
     st.stop()
 
 # Mapear bundle_code a nombre
-bundles["bundle_name"] = bundles["bundle_code"].map(bundle_names).fillna(bundles["bundle_code"])
+# Solo usar el mapping, no fillna con bundle_code para evitar strings raros
+bundles["bundle_name"] = bundles["bundle_code"].map(bundle_names)
+
+# Si hay bundle_codes sin nombre en el mapping, los eliminamos
+# (no deberia pasar, pero por seguridad)
+bundles = bundles[bundles["bundle_name"].notna()].copy()
+
+if bundles.empty:
+    st.warning("No hay ventas de paquetes registradas.")
+    st.stop()
 
 # =================================================
 # Resumen
 # =================================================
 total_bundle_sales = bundles["net_amount"].sum()
+
+# UNICO uso permitido de df_filtered: calcular ventas totales del periodo
+# para la metrica de participacion
 total_sales = df_filtered["net_amount"].sum()
 
-bundle_share = total_bundle_sales / total_sales * 100
+bundle_share = total_bundle_sales / total_sales * 100 if total_sales > 0 else 0.0
 
 bundle_units = bundles["quantity"].sum()
 
-# Métricas personalizadas con HTML
+# Metricas personalizadas con HTML
 st.markdown(f"""
 <div style="display: flex; gap: 10px; margin-bottom: 20px;">
     <div style="flex: 1; background-color: #f0f2f6; padding: 15px; border-radius: 5px;">
@@ -120,13 +136,15 @@ st.markdown(f"""
         <div style="font-size: 24px; font-weight: 600; color: #31333F;">${total_bundle_sales:,.0f}</div>
     </div>
     <div style="flex: 1; background-color: #f0f2f6; padding: 15px; border-radius: 5px;">
-        <div style="font-size: 14px; color: #31333F;">Participación paquetes</div>
+        <div style="font-size: 14px; color: #31333F;">Participacion paquetes</div>
         <div style="font-size: 24px; font-weight: 600; color: #31333F;">{bundle_share:.1f}%</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
 st.caption(f"Unidades de paquetes vendidas: {bundle_units:,}")
+
+st.caption("ℹ️ Nota sobre margenes: Los costos actuales se aplican a todo el periodo historico. Precision total desde octubre 2025; periodos anteriores son una aproximacion consistente.")
 
 st.divider()
 

@@ -10,6 +10,9 @@ burger_double_cheese,Queso Rebanada Amarillo Caja c/400 pz,2,unit,,1
 burger_plain,Pan Hamburguesa,1,unit,,1
 burger_plain,Carne Res (Paq C/60 pz),1,unit,no cheese,1
 
+burger_plain_double,Pan Hamburguesa,1,unit,,1
+burger_plain_double,Carne Res (Paq C/60 pz),2,unit,,1
+
 burger_chicken,Pan Hamburguesa,1,unit,,1
 burger_chicken,Pollo pieza,1,unit,,1
 
@@ -31,10 +34,14 @@ palomas_beef,Ternera (Bolsa c/10 rac),1,unit,4 tacos total,1
 tornillos,Tornillos (Bolsa c/7 ordenes),1,portion,,1
 
 astropapa,Mantequilla,0.1,portion,shared portion,1
-astropapa,Queso en Barra 907g,0.15,portion,,1
+astropapa,Queso en Barra 907g,0.125,portion,,1
 astropapa,Crema 250g,0.2,portion,,1
 
 fries_full,Papas Francesas,1,unit,side,1
 fries_half,Papas Media Orden,1,unit,side,1
 
 extra_cheese,Queso en Barra 907g,0.125,portion,extra cheese portion,1
+
+extra_meat,Carne Res (Paq C/60 pz),1,unit,,1
+
+brownie,Brownie,1,unit,,1

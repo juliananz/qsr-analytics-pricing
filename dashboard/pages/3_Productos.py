@@ -116,6 +116,8 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+st.caption("ℹ️ Nota sobre margenes: Los costos actuales se aplican a todo el periodo historico. Precision total desde octubre 2025; periodos anteriores son una aproximacion consistente.")
+
 st.divider()
 
 # =================================================
