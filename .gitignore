@@ -3,17 +3,14 @@ __pycache__/
 *.pyc
 .env
 
-# Data
-data/raw/*
-data/processed/*
-data/analytics/*
-
-!data/raw/README.md
-!data/processed/.gitkeep
-!data/analytics/.gitkeep
+# Data - generated outputs
+data/raw_data/*_validated.csv
+data/processed_data/margin_alerts.csv
+data/analytics/
 
 # Secrets
 .secrets/
 
 # OS
 .DS_Store
+nul
