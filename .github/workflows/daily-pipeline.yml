@@ -1,0 +1,60 @@
+name: Daily Pipeline
+
+on:
+  schedule:
+    # 7:00 AM Mexico City (UTC-6) = 13:00 UTC
+    - cron: '0 13 * * *'
+  push:
+    paths:
+      - 'data/raw_data/comandas.xlsx'
+  workflow_dispatch:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas pyarrow openpyxl pyyaml gspread google-auth
+
+      - name: Write Google credentials
+        run: echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > /tmp/sa.json
+
+      - name: Ingest Google Sheets
+        run: python scripts/ingest_google_sheets.py
+        env:
+          GOOGLE_CREDENTIALS_PATH: /tmp/sa.json
+
+      - name: Incremental POS sales
+        run: |
+          if [ -f data/raw_data/comandas.xlsx ]; then
+            python scripts/build_fact_sales_incremental.py || echo "No new POS data to process"
+          fi
+
+      - name: Build margins
+        run: python scripts/build_fact_sales_margin.py
+
+      - name: Build summary and alerts
+        run: |
+          python scripts/build_margin_summary.py
+          python scripts/build_margin_alerts.py
+
+      - name: Clean credentials
+        if: always()
+        run: rm -f /tmp/sa.json
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/raw_data/*_validated.csv data/analytics/ data/processed_data/margin_alerts.csv
+          git diff --staged --quiet || git commit -m "chore: daily pipeline update"
+          git push

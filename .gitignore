@@ -3,10 +3,15 @@ __pycache__/
 *.pyc
 .env
 
-# Data - generated outputs
-data/raw_data/*_validated.csv
-data/processed_data/margin_alerts.csv
-data/analytics/
+# Data - large source files (not needed in cloud)
+data/raw_data/POS/
+data/raw_data/comandas.xlsx
+
+# Data - legacy/intermediate analytics (not needed by dashboard)
+data/analytics/fact_sales.parquet
+data/analytics/sales_with_margin.parquet
+data/analytics/ventas_*.parquet
+data/analytics/cost_sensitivity*.csv
 
 # Secrets
 .secrets/

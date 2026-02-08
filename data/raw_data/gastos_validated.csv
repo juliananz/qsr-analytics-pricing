@@ -1,0 +1,709 @@
+fecha,descripcion,categoria,proveedor,monto,elaboro
+2025-10-01,Verdura,Insumos,Frutas Luis,120,Julián Anzaldúa Guitrón
+2025-10-01,Envio (Coss),Transporte,Transporte (checar),111,Julián Anzaldúa Guitrón
+2025-10-01,Vasos y coca,Consumo empleados,Seven Eleven,80,Julián Anzaldúa Guitrón
+2025-10-01,Nelson,Empleados / Mano de obra,Sueldo Nelson,400,Julián Anzaldúa Guitrón
+2025-10-01,Coca,Consumo empleados,Seven Eleven,58,Julián Anzaldúa Guitrón
+2025-10-01,Market,Servicios / Mantenimiento,Market,1500,Julián Anzaldúa Guitrón
+2025-10-01,Hielo,Insumos,Seven Eleven,52,Julián Anzaldúa Guitrón
+2025-10-01,Taxi,Transporte,Didi,200,Julián Anzaldúa Guitrón
+2025-10-01,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-02,Verdura,Insumos,Frutas Luis,600,Julián Anzaldúa Guitrón
+2025-10-02,Rollo,Consumo empleados,Seven Eleven,35,Julián Anzaldúa Guitrón
+2025-10-02,Pan y tortillas,Insumos,Fresh,240,Julián Anzaldúa Guitrón
+2025-10-02,Vasos y coca,Consumo empleados,Seven Eleven,85,Julián Anzaldúa Guitrón
+2025-10-02,Hielo,Insumos,Seven Eleven,55,julián Anzaldúa Guitrón
+2025-10-02,Taxi,Transporte,Taxi Julio,100,Julián Anzaldúa Guitrón
+2025-10-02,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-03,Checo,Empleados / Mano de obra,Préstamo Checo,100,Julián Anzaldúa Guitrón
+2025-10-03,Coca,Consumo empleados,Seven Eleven,65,Julián Anzaldúa Guitrón
+2025-10-03,Pan y verdura,Insumos,Fresh y Frutas Luis,750,Julián Anzaldúa Guitrón
+2025-10-03,Hielo,Insumos,Seven Eleven,105,Julián Anzaldúa Guitrón
+2025-10-03,Taxi,Transporte,Taxi Julio,100,Julián Anzaldúa Guitrón
+2025-10-03,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-03,Julio,Empleados / Mano de obra,Préstamo Julio,200,Julián Anzaldúa Guitrón
+2025-10-04,Verdura,Insumos,Frutas Luis,580,Julián Anzaldúa Guitrón
+2025-10-04,Sal y pinol,Insumos,Seven Eleven,58,Julián Anzaldúa Guitrón
+2025-10-04,Propina papá,Transporte,Taxi,50,Julián Anzaldúa Guitrón
+2025-10-04,Coca,Consumo empleados,Seven Eleven,56,Julián Anzaldúa Guitrón
+2025-10-04,Checo,Empleados / Mano de obra,Préstamo Checo,150,Julián Anzaldúa Guitrón
+2025-10-04,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-04,Vaso,Consumo empleados,Seven Eleven,38,Julián Anzaldúa Guitrón
+2025-10-04,Hielo,Insumos,Seven Eleven,150,Julián Anzaldúa Guitrón
+2025-10-04,Rona,Empleados / Mano de obra,Sueldo Rona,1200,Julián Anzaldúa Guitrón
+2025-10-04,Taxi Julio,Transporte,Taxi Julio,100,Julián Anzaldúa Guitrón
+2025-10-04,Taxi Juan,Transporte,Taxi Juan,100,Julián Anzaldúa Guitrón
+2025-10-04,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-05,Envio (Coss),Transporte,Taxi,111,Julián Anzaldúa Guitrón
+2025-10-05,Julio,Empleados / Mano de obra,Préstamo Julio,100,Julián Anzaldúa Guitrón
+2025-10-05,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-05,Cena,Consumo empleados,Boneless / Rappi,735,Julián Anzaldúa Guitrón
+2025-10-05,Transporte pedido grande,Transporte,Goyo,600,Julián Anzaldúa Guitrón
+2025-10-05,Papel,Consumo empleados,Seven Eleven,41,Julián Anzaldúa Guitrón
+2025-10-05,Chamuco,Consumo empleados,Chamuco,150,Julián Anzaldúa Guitrón
+2025-10-05,Pan,Insumos,Fresh,78,Julián Anzaldúa Guitrón
+2025-10-05,Rona,Empleados / Mano de obra,Sueldo Rona (?),500,Julián Anzaldúa Guitrón
+2025-10-05,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-05,Chamuco a casa de mi papá,Transporte,Goyo,150,Julián Anzaldúa Guitrón
+2025-10-05,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-05,Julián,Pagos personales,Conchilu,800,Julián Anzaldúa Guitrón
+2025-10-06,Coca y vasos,Consumo empleados,Seven Eleven,85,Julián Anzaldúa Guitrón
+2025-10-06,Sacar la basura,Servicios / Mantenimiento,Poncho,200,Julián Anzaldúa Guitrón
+2025-10-06,Hielo,Insumos,Seven Eleven,60,Julián Anzaldúa Guitrón
+2025-10-06,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-07,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-07,Tortuga,Insumos,Chica tortuga,420,Julián Anzaldúa Guitrón
+2025-10-07,Checo,Empleados / Mano de obra,Préstamo Checo,250,Julián Anzaldúa Guitrón
+2025-10-07,Julio,Empleados / Mano de obra,Sueldo Julio,1200,Julián Anzaldúa Guitrón
+2025-10-07,Brownies,Insumos,Chica brownie,400,Julián Anzaldúa Guitrón
+2025-10-07,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-07,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-07,Fumigación,Servicios / Mantenimiento,Fumigador,850,Julián Anzaldúa Guitrón
+2025-10-07,Teléfono,Servicios / Mantenimiento,Telmex,700,Julián Anzaldúa Guitrón
+2025-10-07,Pan y estopa,Insumos,Fresh,380,Julián Anzaldúa Guitrón
+2025-10-07,Hielo,Insumos,Seven Eleven,60,Julián Anzaldúa Guitrón
+2025-10-07,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-07,Checo,Empleados / Mano de obra,Préstamo Checo,50,Julián Anzaldúa Guitrón
+2025-10-07,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-10-07,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-07,Vasos,Consumo empleados,Seven Eleven,28,Julián Anzaldúa Guitrón
+2025-10-07,Papel,Consumo empleados,Seven Eleven,41,Julián Anzaldúa Guitrón
+2025-10-08,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-08,Checo,Empleados / Mano de obra,Préstamo Checo,50,Julián Anzaldúa Guitrón
+2025-10-08,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-10-08,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-08,Vasos,Consumo empleados,Seven Eleven,28,Julián Anzaldúa Guitrón
+2025-10-08,Papel,Consumo empleados,Seven Eleven,41,Julián Anzaldúa Guitrón
+2025-10-08,Taxis,Transporte,Taxis varios,200,Julián Anzaldúa Guitrón
+2025-10-08,Hielo,Insumos,Seven Eleven,105,Julián Anzaldúa Guitrón
+2025-10-08,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-09,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-09,Tortillas,Consumo empleados,Tortillería,37,Julián Anzaldúa Guitrón
+2025-10-09,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-10,Checo,Empleados / Mano de obra,Préstamo Checo,100,Julián Anzaldúa Guitrón
+2025-10-10,Coca y vasos,Consumo empleados,Seven Eleven,85,Julián Anzaldúa Guitrón
+2025-10-10,Verdura,Insumos,Frutas Luis,560,Julián Anzaldúa Guitrón
+2025-10-10,Pan,Insumos,Fresh,55,Julián Anzaldúa Guitrón
+2025-10-10,Hielo,Insumos,Seven Eleven,104,Julián Anzaldúa Guitrón
+2025-10-10,Gasolina,Transporte,Gasolinera,500,Julián Anzaldúa Guitrón
+2025-10-10,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-10,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-11,Verdura,Insumos,Frutas Luis,560,Julián Anzaldúa Guitrón
+2025-10-11,Agua,Consumo empleados,Seven Eleven,216,Julián Anzaldúa Guitrón
+2025-10-11,Propina papá,Transporte,Envio de Coss,50,Julián Anzaldúa Guitrón
+2025-10-11,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-11,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-11,Devolución de palomas,Devolución,Astro Burger,112,Julián Anzaldúa Guitrón
+2025-10-11,Checo,Empleados / Mano de obra,Préstamo Checo,100,Julián Anzaldúa Guitrón
+2025-10-11,Sueldo,Empleados / Mano de obra,Sueldo de alguien,3040,Julián Anzaldúa Guitrón
+2025-10-11,Papel,Consumo empleados,Seven Eleven,41,Julián Anzaldúa Guitrón
+2025-10-11,Coca,Consumo empleados,Seven Eleven,47,Julián Anzaldúa Guitrón
+2025-10-11,Taxis,Transporte,Taxis varios,300,Julián Anzaldúa Guitrón
+2025-10-12,Papas a la francesa,Devolución,Astro Burger,58,Julián Anzaldúa Guitrón
+2025-10-12,Coca y vasos,Consumo empleados,Seven Eleven,75,Julián Anzaldúa Guitrón
+2025-10-12,Julián,Pagos personales,Seven Eleven,126,Julián Anzaldúa Guitrón
+2025-10-12,Chiles (coss),Transporte,Taxi,111,Julián Anzaldúa Guitrón
+2025-10-12,Tenedores,Insumos,Walmart,35,Julián Anzaldúa Guitrón
+2025-10-12,Rona,Empleados / Mano de obra,Préstamo Rona,50,Julián Anzaldúa Guitrón
+2025-10-12,Coca,Consumo empleados,Seven Eleven,47,Julián Anzaldúa Guitrón
+2025-10-12,Cena,Consumo empleados,Boneless / Rappi,600,Julián Anzaldúa Guitrón
+2025-10-12,Daniela,Empleados / Mano de obra,Préstamo Daniela,150,Julián Anzaldúa Guitrón
+2025-10-12,Rona,Empleados / Mano de obra,Sueldo Rona,800,Julián Anzaldúa Guitrón
+2025-10-12,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-12,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-12,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-13,Varios,Otro,Desconocido,200,Julián Anzaldúa Guitrón
+2025-10-13,Vaso y cocas,Consumo empleados,Seven Eleven,75,Julián Anzaldúa Guitrón
+2025-10-13,Taxi Nicole,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-10-13,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-13,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-14,Tortuga,Insumos,Chica tortuga,420,Julián Anzaldúa Guitrón
+2025-10-14,Domicilios,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-10-14,Coca y cloro,Insumos,Seven Eleven,66,Julián Anzaldúa Guitrón
+2025-10-14,Pan,Insumos,Fresh,200,Julián Anzaldúa Guitrón
+2025-10-14,Verdura,Insumos,Frutas Luis,312,Julián Anzaldúa Guitrón
+2025-10-14,Brownies,Insumos,Chica brownie,400,Julián Anzaldúa Guitrón
+2025-10-14,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-14,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-15,Checo,Empleados / Mano de obra,Sueldo Checo,1000,Julián Anzaldúa Guitrón
+2025-10-15,Verdura,Insumos,Frutas Luis,520,Julián Anzaldúa Guitrón
+2025-10-15,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-15,Sal,Insumos,Seven Eleven,25,Julián Anzaldúa Guitrón
+2025-10-15,Fabuloso,Insumos,Seven Eleven,60,Julián Anzaldúa Guitrón
+2025-10-15,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-15,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-15,Taxis,Transporte,Taxis varios,200,Julián Anzaldúa Guitrón
+2025-10-15,Hielo,Insumos,Seven Eleven,105,Julián Anzaldúa Guitrón
+2025-10-16,Varios,Insumos,Varios,500,Julián Anzaldúa Guitrón
+2025-10-16,Sacar la basura,Servicios / Mantenimiento,Poncho,200,Julián Anzaldúa Guitrón
+2025-10-16,Refresco y vasos,Consumo empleados,Seven Eleven,85,Julián Anzaldúa Guitrón
+2025-10-16,Lulu,Pagos personales,Limpieza casa,1200,Julián Anzaldúa Guitrón
+2025-10-16,Galletas,Consumo empleados,Seven Eleven,26,Julián Anzaldúa Guitrón
+2025-10-16,Julián,Pagos personales,Julián,149,Julián Anzaldúa Guitrón
+2025-10-16,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-16,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-17,Pan,Insumos,Fresh,500,Julián Anzaldúa Guitrón
+2025-10-17,Sacar la basura,Servicios / Mantenimiento,Poncho,200,Julián Anzaldúa Guitrón
+2025-10-17,Verdura,Insumos,Frutas Luis,528,Julián Anzaldúa Guitrón
+2025-10-17,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-17,Checo,Empleados / Mano de obra,Préstamo Checo,100,Julián Anzaldúa Guitrón
+2025-10-17,Julián,Pagos personales,Julián,100,Julián Anzaldúa Guitrón
+2025-10-17,Hielo,Insumos,Seven Eleven,105,Julián Anzaldúa Guitrón
+2025-10-17,Taxi,Transporte,Taxi,120,Julián Anzaldúa Guitrón
+2025-10-17,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-17,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-18,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-18,Coca y vasos,Consumo empleados,Seven Eleven,92,Julián Anzaldúa Guitrón
+2025-10-18,Pan y aguacate,Insumos,Seven Eleven,500,Julián Anzaldúa Guitrón
+2025-10-18,Sueldo,Empleados / Mano de obra,Sueldo,3040,Julián Anzaldúa Guitrón
+2025-10-18,Aguas,Consumo empleados,Seven Eleven,465,Julián Anzaldúa Guitrón
+2025-10-18,Checo,Empleados / Mano de obra,Préstamo Checo,100,Julián Anzaldúa Guitrón
+2025-10-18,Devolución tortas,Devolución,Astro Burger,915,Julián Anzaldúa Guitrón
+2025-10-18,Papel,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-18,Hielo,Insumos,Seven Eleven,100,Julián Anzaldúa Guitrón
+2025-10-18,Gasolina,Transporte,Gasolinera,500,Julián Anzaldúa Guitrón
+2025-10-18,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-18,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-18,Verdura,Insumos,Frutas Luis,580,Julián Anzaldúa Guitrón
+2025-10-19,Verdura,Insumos,Frutas Luis,240,Julián Anzaldúa Guitrón
+2025-10-19,Sacar la basura,Servicios / Mantenimiento,Poncho,300,Julián Anzaldúa Guitrón
+2025-10-19,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-19,Cena,Consumo empleados,Rappi,685,Julián Anzaldúa Guitrón
+2025-10-19,Vasos,Consumo empleados,Seven Eleven,38,Julián Anzaldúa Guitrón
+2025-10-19,Hielo,Insumos,Seven Eleven,52,Julián Anzaldúa Guitrón
+2025-10-19,Sueldo Julián,Empleados / Mano de obra,Sueldo Julián,2200,Julián Anzaldúa Guitrón
+2025-10-19,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-10-19,Tarjeta,Pagos personales,Julián,500,Julián Anzaldúa Guitrón
+2025-10-20,Coca,Consumo empleados,Seven Eleven,56,Julián Anzaldúa Guitrón
+2025-10-20,Envio (Coss),Transporte,Envio de Coss,50,Julián Anzaldúa Guitrón
+2025-10-20,Verdura,Insumos,Frutas Luis,320,Julián Anzaldúa Guitrón
+2025-10-20,Aguas,Insumos,Seven Eleven,450,Julián Anzaldúa Guitrón
+2025-10-20,Taxi,Transporte,Taxi,120,Julián Anzaldúa Guitrón
+2025-10-20,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-20,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-20,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-21,Coca,Consumo empleados,Seven Eleven,555,Julián Anzaldúa Guitrón
+2025-10-21,Varios,Insumos,Varios,300,Julián Anzaldúa Guitrón
+2025-10-21,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-10-21,Jabón,Consumo empleados,Seven Eleven,17,Julián Anzaldúa Guitrón
+2025-10-21,Papel,Consumo empleados,Seven Eleven,41,Julián Anzaldúa Guitrón
+2025-10-21,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-21,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-22,Plancha,Servicios / Mantenimiento,Plancha,800,Julián Anzaldúa Guitrón
+2025-10-22,Coca,Consumo empleados,Seven Eleven,125,Julián Anzaldúa Guitrón
+2025-10-22,Aguas,Insumos,Seven Eleven,480,Julián Anzaldúa Guitrón
+2025-10-22,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-10-22,Julián,Pagos personales,Seven Eleven,126,Julián Anzaldúa Guitrón
+2025-10-22,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-22,Hielo,Insumos,Seven Eleven,52,Julián Anzaldúa Guitrón
+2025-10-22,Taxi Juan,Transporte,Taxi Juan,100,Julián Anzaldúa Guitrón
+2025-10-22,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-23,Reparación Refrigerador,Servicios / Mantenimiento,Sr. Refrigerador,700,Julián Anzaldúa Guitrón
+2025-10-23,Verdura,Insumos,Frutas Luis,600,Julián Anzaldúa Guitrón
+2025-10-23,Caja Cambio,Otro,Astro Burger,100,Julián Anzaldúa Guitrón
+2025-10-23,Hielo,Insumos,Seven Eleven,52,Julián Anzaldúa Guitrón
+2025-10-23,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-23,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-24,Nicole,Empleados / Mano de obra,Préstamo Nicole,200,Julián Anzaldúa Guitrón
+2025-10-24,Reparación Refri ,Servicios / Mantenimiento,Domingo (señor Refri),500,Julián Anzaldúa Guitrón
+2025-10-24,Coca,Consumo empleados,Seven eleven,48,Julián Anzaldúa Guitrón
+2025-10-24,Taxi Nicole,Transporte,Taxi Nicole ,115,Julián Anzaldúa Guitrón
+2025-10-24,Préstamo Checo,Empleados / Mano de obra,Préstamo Checo,150,Julián Anzaldúa Guitrón
+2025-10-24,Varios,Insumos,Varios,778,Cristy Torres
+2025-10-24,Taxi Roba,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-10-24,Tarjeta,Pagos personales,Julián ,1000,Julián Anzaldúa Guitrón
+2025-10-24,Motor Refri ,Servicios / Mantenimiento,Señor Refrigerador ,600,Julián Anzaldúa Guitrón
+2025-10-25,Coca y vasos,Consumo empleados,Seven eleven,84,Julián Anzaldúa Guitrón
+2025-10-25,Sal,Consumo empleados,Seven eleven ,23,Julián Anzaldúa Guitrón
+2025-10-25,Aguas sabor ,Insumos,Aguas Frescas SLW,600,Julián Anzaldúa Guitrón
+2025-10-26,Pintura,Servicios / Mantenimiento,Poncho,1500,Julián Anzaldúa Guitrón
+2025-10-26,Empanadas,Consumo empleados,Empanadas,30,Julián Anzaldúa Guitrón
+2025-10-26,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-26,Cena,Consumo empleados,Rappi,725,Julián Anzaldúa Guitrón
+2025-10-26,Taxi,Transporte,Taxi Rona y Daniela,200,Julián Anzaldúa Guitrón
+2025-10-26,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-26,Verdura,Insumos,Frutas Luis,250,Julián Anzaldúa Guitrón
+2025-10-26,Pan,Insumos,Fresh Market,250,Julián Anzaldúa Guitrón
+2025-10-26,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-27,Vasos y coca,Consumo empleados,Seven Eleven,75,Julián Anzaldúa Guitrón
+2025-10-27,Lulu,Empleados / Mano de obra,Limpieza casa,1200,Julián Anzaldúa Guitrón
+2025-10-27,Julián,Pagos personales,Julián,1015,Julián Anzaldúa Guitrón
+2025-10-27,Coca,Consumo empleados,Seven Eleven,48,Julián Anzaldúa Guitrón
+2025-10-27,Varios,Varios,Varios,138,Julián Anzaldúa Guitrón
+2025-10-27,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-27,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-28,Verdura,Insumos,Frutas Luis,250,Julián Anzaldúa Guitrón
+2025-10-28,Aguas,Insumos,Aguas SLW,450,Julián Anzaldúa Guitrón
+2025-10-28,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-10-28,Crema,Insumos,Seven Eleven,40,Julián Anzaldúa Guitrón
+2025-10-28,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-28,Hielo,Insumos,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-10-29,Vasos,Consumo empleados,Seven Eleven,38,Julián Anzaldúa Guitrón
+2025-10-29,Chocolate,Insumos,Chica chocolate,420,Julián Anzaldúa Guitrón
+2025-10-29,Papel,Consumo empleados,Seven Eleven,40,Julián Anzaldúa Guitrón
+2025-10-29,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-29,Taxi Juan,Transporte,Taxi Juan,100,Julián Anzaldúa Guitrón
+2025-10-30,Tarjeta,Pagos personales,Julián,2000,Julián Anzaldúa Guitrón
+2025-10-30,"Pan, Aguacate y Verdura",Insumos,Varios,1100,Julián Anzaldúa Guitrón
+2025-10-30,Sacar la basura,Servicios / Mantenimiento,Poncho,250,Julián Anzaldúa Guitrón
+2025-10-30,Coca,Consumo empleados,Seven Eleven,46,Julián Anzaldúa Guitrón
+2025-10-30,Sky,Servicios / Mantenimiento,Sky,1295,Julián Anzaldúa Guitrón
+2025-10-30,Brownies,Insumos,Chica brownie,400,Julián Anzaldúa Guitrón
+2025-10-30,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-10-30,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-10-31,Verdura,Insumos,Frutas Luis,588,Julián Anzaldúa Guitrón
+2025-10-31,Coca,Consumo empleados,Seven Eleven,56,Julián Anzaldúa Guitrón
+2025-10-31,Propina papá,Transporte,Coss,50,Julián Anzaldúa Guitrón
+2025-10-31,Checo,Transporte,Taxi Checo,100,Julián Anzaldúa Guitrón
+2025-10-31,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-10-31,Reparación Computadora,Servicios / Mantenimiento,Computadora,1500,Julián Anzaldúa Guitrón
+2025-10-31,Taxi Juan,Transporte,Taxi Juan,100,Julián Anzaldúa Guitrón
+2025-10-31,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-01,"Pan, Aguacate y Verdura",Insumos,Varios,800,Julián Anzaldúa Guitrón
+2025-11-01,Vasos,Consumo empleados,Seven Eleven,36,Julián Anzaldúa Guitrón
+2025-11-01,Sueldo Señora + Nicole,Empleados / Mano de obra,Nicole,3040,Julián Anzaldúa Guitrón
+2025-11-01,Taxi Checo,Transporte,Taxi Checo,100,Julián Anzaldúa Guitrón
+2025-11-01,Coca,Consumo empleados,Seven Eleven,63,Julián Anzaldúa Guitrón
+2025-11-01,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-01,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-11-02,Verdura ,Insumos,Frutas Luis ,357,Julián Anzaldúa Guitrón
+2025-11-02,Domicilios,Servicios / Mantenimiento,Domicilio,152,Julián Anzaldúa Guitrón
+2025-11-02,Cena,Consumo empleados,Yoggi,450,Julián Anzaldúa Guitrón
+2025-11-02,Papel,Consumo empleados,Seven Eleven ,43,Julián Anzaldúa Guitrón
+2025-11-02,Sal,Insumos,Seven Eleven,26,Julián Anzaldúa Guitrón
+2025-11-02,Domicilio ,Servicios / Mantenimiento,Domicilio ,22,Julián Anzaldúa Guitrón
+2025-11-02,Gasolina,Transporte,Gasolinera ,500,Julián Anzaldúa Guitrón
+2025-11-03,Aguas   sabor ,Insumos,Aguas frescas SLW,750,Cristy Torres
+2025-11-03,Taxi,Transporte,Nicole,105,Cristy Torres
+2025-11-03,Verdura ,Insumos,Frutas luis,357,Cristy Torres
+2025-11-03,Rollos impresora ,Insumos,Blanca baleros ,1520,Cristy Torres
+2025-11-03,Pan jamón y queso ,Consumo empleados,Seven ,119,Cristy Torres
+2025-11-03,Refrescos y vasos ,Consumo empleados,Seven,75,Cristy Torres
+2025-11-03,Pan torta ,Insumos,Fresh,150,Cristy Torres
+2025-11-03,Tarjeta ,Pagos personales,Julián ,1000,Cristy Torres
+2025-11-03,Taxi,Transporte,Daniela ,100,Cristy Torres
+2025-11-04,Coca,Consumo empleados,Seven,45,Cristy Torres
+2025-11-04,Afilador ,Servicios / Mantenimiento,Señor x,200,Cristy Torres
+2025-11-04,Verdura ,Insumos,Frutas luis,252,Cristy Torres
+2025-11-04,Taxi a Daniela ,Transporte,Idraiber,100,Cristy Torres
+2025-11-04,Tarjeta ,Pagos personales,Julian,1000,Cristy Torres
+2025-11-04,Fumigador,Servicios / Mantenimiento,Genesis,850,Cristy Torres
+2025-11-06,Cocq,Consumo empleados,Seven,45,Cristy Torres
+2025-11-06,Verdura y pan ,Insumos,Frutas luis y fresh,800,Cristy Torres
+2025-11-06,Tarjeta ,Pagos personales,Julian,1000,Cristy Torres
+2025-11-06,Taxi,Transporte,Daniela ,100,Cristy Torres
+2025-11-07,verdura ,Insumos,Frutas luis,680,Julián Anzaldúa Guitrón
+2025-11-07,Coca,Consumo empleados,Seven,50,Julián Anzaldúa Guitrón
+2025-11-07,Devolución ,DEVOLUCIÓN ,Astro,184,Julián Anzaldúa Guitrón
+2025-11-07,Taxi Nicole ,Transporte,Taxi,105,Julián Anzaldúa Guitrón
+2025-11-07,Taxi Checo ,Transporte,Taxi,150,Julián Anzaldúa Guitrón
+2025-11-07,Brownies ,Insumos,Chica brownie ,400,Julián Anzaldúa Guitrón
+2025-11-07,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-11-07,Coca,Consumo empleados,Seven,45,Julián Anzaldúa Guitrón
+2025-11-07,Taxi Rona,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-07,Tarjeta,Pagos personales,Julián ,1009,Julián Anzaldúa Guitrón
+2025-11-08,Verdura,Insumos,Frutas luis,530,Cristy Torres
+2025-11-08,Coca,Consumo empleados,Seven,83,Cristy Torres
+2025-11-08,Prestamo personal,Pagos personales,Nelson,1000,Cristy Torres
+2025-11-08,Sueldo,Empleados / Mano de obra,Nicole y conchilu,3040,Cristy Torres
+2025-11-08,Taxi checo,Transporte,Checo,100,Cristy Torres
+2025-11-08,Coca,Consumo empleados,Seven,58,Cristy Torres
+2025-11-08,Rollo,Consumo empleados,Seven,30,Cristy Torres
+2025-11-08,Taxi ronamdo,Transporte,Idraiber ,100,Cristy Torres
+2025-11-08,Tarjeta ,Pagos personales,Julian ,1000,Cristy Torres
+2025-11-10,Vasos y coca ,Consumo empleados,Seven,90,Cristy Torres
+2025-11-10,Verdura,Insumos,Frutas luis,252,Cristy Torres
+2025-11-10,Taxi,Transporte,Nicole,100,Cristy Torres
+2025-11-10,Propina de papa ,Servicios / Mantenimiento,Señor de la papa ,50,Cristy Torres
+2025-11-10,Pan y jamon,Consumo empleados,Guadalajara,108,Cristy Torres
+2025-11-10,Pan y aguacate ,Insumos,Alsuper ,300,Cristy Torres
+2025-11-10,Tarjeta ,Pagos personales,Julian ,1000,Cristy Torres
+2025-11-10,Taxi,Transporte,Daniela ,100,Cristy Torres
+2025-11-11,Fumigador,Servicios / Mantenimiento,Fumigaciones genesis,200,Cristy Torres
+2025-11-11,Pan,Insumos,Alsuper,200,Cristy Torres
+2025-11-11,Verdura,Insumos,Frutas luis,376,Cristy Torres
+2025-11-11,Varios,Consumo empleados,Farmacia guadalajara,104,Cristy Torres
+2025-11-11,Vasos y tenedores,Consumo empleados,Seven ,74,Cristy Torres
+2025-11-11,Cloro y agua ,Insumos,Seven,47,Cristy Torres
+2025-11-11,Refresco,Consumo empleados,Seven,58,Cristy Torres
+2025-11-11,Bolsas para el corte,Bolsas corte,Mercado libre,298,Cristy Torres
+2025-11-11,Taxi ,Transporte,Indraiber,100,Cristy Torres
+2025-11-11,Gasolina,Transporte,Gasolina,500,Cristy Torres
+2025-11-11,Tarjeta,Pagos personales,Julian,1000,Cristy Torres
+2025-11-12,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-11-12,Taxi Juan,Transporte,Taxi Juan,100,Julián Anzaldúa Guitrón
+2025-11-12,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-12,Esponjas,Insumos,Seven Eleven,32,Julián Anzaldúa Guitrón
+2025-11-12,Checo ,Empleados / Mano de obra,Checo,500,Julián Anzaldúa Guitrón
+2025-11-12,Aguas frescas,Insumos,Aguas SLW,750,Julián Anzaldúa Guitrón
+2025-11-12,Charolas,Insumos,Charolas ,350,Julián Anzaldúa Guitrón
+2025-11-12,Refri,Servicios / Mantenimiento,Señor refri,50,Julián Anzaldúa Guitrón
+2025-11-13,Coca,Consumo empleados,Seven,50,Cristy Torres
+2025-11-13,Verdura,Insumos,Frutas luis,400,Cristy Torres
+2025-11-13,TarjetA,Pagos personales,Julian,1000,Cristy Torres
+2025-11-13,Taxi daniela,Transporte,Indraiver,100,Cristy Torres
+2025-11-14,Verdura,Insumos,Frutas Luis,700,Julián Anzaldúa Guitrón
+2025-11-14,Taxi Checo,Transporte,Taxi checo,100,Julián Anzaldúa Guitrón
+2025-11-14,Nicole ,Transporte,Taxi Nicole ,103,Julián Anzaldúa Guitrón
+2025-11-14,Coca,Consumo empleados,Seven Eleven ,50,Julián Anzaldúa Guitrón
+2025-11-14,Rollo,Consumo empleados,Seven Eleven ,30,Julián Anzaldúa Guitrón
+2025-11-14,Pan y Aguacate ,Insumos,Fresh ,200,Julián Anzaldúa Guitrón
+2025-11-14,Tarjeta,Pagos personales,Julián ,1000,Julián Anzaldúa Guitrón
+2025-11-15,Verdura y pan ,Insumos,Frutas Luis,700,Julián Anzaldúa Guitrón
+2025-11-15,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-11-15,Sueldo,Empleados / Mano de obra,Sueldo ,3040,Julián Anzaldúa Guitrón
+2025-11-15,Coca,Consumo empleados,Seven Eleven ,50,Julián Anzaldúa Guitrón
+2025-11-15,Coca,Consumo empleados,Seven Eleven,46,Julián Anzaldúa Guitrón
+2025-11-15,Tarjeta,Pagos personales,Julián ,1000,Julián Anzaldúa Guitrón
+2025-11-16,Pan y verdura ,Insumos,Fresh,600,Julián Anzaldúa Guitrón
+2025-11-16,Vasos y refresco ,Consumo empleados,Seven Eleven ,75,Julián Anzaldúa Guitrón
+2025-11-16,Cena,Consumo empleados,Sake grill,572,Julián Anzaldúa Guitrón
+2025-11-16,Taxi Rona ,Transporte,Taxi Rona ,100,Julián Anzaldúa Guitrón
+2025-11-16,Tarjeta,Pagos personales,Julián ,1000,Julián Anzaldúa Guitrón
+2025-11-16,Sueldo Julián ,Empleados / Mano de obra,Julián joven,2500,Julián Anzaldúa Guitrón
+2025-11-17,Refresco,Consumo empleados,Seven,56,Cristy Torres
+2025-11-17,Verdura,Insumos,Frutas luis,400,Cristy Torres
+2025-11-17,Nelson 500,Prestamo ,Nelson,500,Cristy Torres
+2025-11-17,Día festivo, Dis festivo,Salado,1285,Cristy Torres
+2025-11-17,Dis festivo,Dia festivo ,Dia festivo,500,Cristy Torres
+2025-11-17,Taxi rona,Consumo empleados,Indraiver ,100,Cristy Torres
+2025-11-17,Tarjeta,Pagos personales,Julian,1000,Cristy Torres
+2025-11-18,Papel,Consumo empleados,Seven Eleven ,43,Julián Anzaldúa Guitrón
+2025-11-18,Aguas frescas ,Insumos,Aguas slw,750,Julián Anzaldúa Guitrón
+2025-11-18,Verdura,Insumos,Frutas Luis,400,Julián Anzaldúa Guitrón
+2025-11-18,Cristy Festivo,Empleados / Mano de obra,Cristy,1285,Julián Anzaldúa Guitrón
+2025-11-18,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-11-19,Pan,Insumos,Fresh ,200,Julián Anzaldúa Guitrón
+2025-11-19,Coca y vasos,Consumo empleados,Seven Eleven ,84,Julián Anzaldúa Guitrón
+2025-11-19,Verdura,Insumos,Frutas Luis ,400,Julián Anzaldúa Guitrón
+2025-11-19,Checo,Empleados / Mano de obra,Préstamo Checo ,1150,Julián Anzaldúa Guitrón
+2025-11-19,Préstamo Nelson,Empleados / Mano de obra,Préstamo Nelson,660,Julián Anzaldúa Guitrón
+2025-11-19,Tarjeta,Pagos personales,Julian,1000,Julián Anzaldúa Guitrón
+2025-11-19,Taxi Juan ,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-19,Taxi Daniela ,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-11-20,Pan de Hot Dog,Insumos,Seven Eleven,49,Julián Anzaldúa Guitrón
+2025-11-20,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-11-20,Juan,Empleados / Mano de obra,Juan,1000,Julián Anzaldúa Guitrón
+2025-11-20,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-20,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-21,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-11-21,Taxi Checo ,Transporte,Taxi Checo ,150,Julián Anzaldúa Guitrón
+2025-11-21,Coca,Consumo empleados,Seven Eleven,50,Julián Anzaldúa Guitrón
+2025-11-21,Taxi Nicole,Transporte,Taxi Nicole,120,Julián Anzaldúa Guitrón
+2025-11-21,Gel y pan,Insumos,Fresh,400,Julián Anzaldúa Guitrón
+2025-11-21,Verdura,Insumos,Frutas Luis,820,Julián Anzaldúa Guitrón
+2025-11-21,Julián (creo que es lo de mauricio),Pagos personales,Julian,500,Julián Anzaldúa Guitrón
+2025-11-21,Tarjeta,Pagos personales,Julián ,1000,Julián Anzaldúa Guitrón
+2025-11-22,Checo,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-22,Sueldo,Empleados / Mano de obra,Sueldo ,3040,Julián Anzaldúa Guitrón
+2025-11-22,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-11-22,Taxi Miguel,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-22,Cristy,Empleados / Mano de obra,Cristy,15,Julián Anzaldúa Guitrón
+2025-11-22,Gasolina,Transporte,Cristy,500,Julián Anzaldúa Guitrón
+2025-11-22,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-23,Papel,Consumo empleados,Seven Eleven ,40,Julián Anzaldúa Guitrón
+2025-11-23,Cena,Consumo empleados,Sake Grill,484,Julián Anzaldúa Guitrón
+2025-11-23,Pan y verdura,Insumos,Fresh y frutas luis,600,Julián Anzaldúa Guitrón
+2025-11-23,Coca y vasos ,Consumo empleados,Seven Eleven ,83,Julián Anzaldúa Guitrón
+2025-11-23,Sueldo Julián ,Empleados / Mano de obra,Julián joven ,2500,Julián Anzaldúa Guitrón
+2025-11-23,Tarjeta,Pagos personales,Julian,1000,Julián Anzaldúa Guitrón
+2025-11-23,Taxi Rona ,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-11-24,Verdura ,Insumos,Frutas luis,400,Cristy Torres
+2025-11-24,Coca,Consumo empleados,Seven,47,Cristy Torres
+2025-11-24,Pan y aguacate ,Insumos,Fresh,200,Cristy Torres
+2025-11-24,Envío de coss,Insumos,Coss,111,Cristy Torres
+2025-11-24,Taxi checo,Transporte,Indraiber,50,Cristy Torres
+2025-11-24,Taxi ( Nicole),Transporte,Indraiber,105,Cristy Torres
+2025-11-24,Braunis ,Insumos,Señor de los braunis,400,Cristy Torres
+2025-11-24,Tarjeta,Pagos personales,Julian,1000,Cristy Torres
+2025-11-25,Verdura,Insumos,Frutas Luis ,625,Julián Anzaldúa Guitrón
+2025-11-25,Coca y vasos,Consumo empleados,Seven Eleven,75,Julián Anzaldúa Guitrón
+2025-11-25,Pedido cancelado,DEVOLUCIÓN ,Astro Burger,89,Julián Anzaldúa Guitrón
+2025-11-25,Lulú,Empleados / Mano de obra,Lulu,1200,Julián Anzaldúa Guitrón
+2025-11-25,Fumigador,Servicios / Mantenimiento,Fumigador,1150,Julián Anzaldúa Guitrón
+2025-11-25,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-11-25,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-26,Pan ,Insumos,Fresh,500,Cristy Torres
+2025-11-26,Cubre boca y coca ,Consumo empleados,Guadalajara,107,Cristy Torres
+2025-11-26,Pastel de checo,Consumo empleados,Fresh,200,Cristy Torres
+2025-11-26,Rollo y tenedores ,Insumos,Seven ,40,Cristy Torres
+2025-11-26,Tarjeta ,Pagos personales,Julian ,1000,Cristy Torres
+2025-11-26,Regalos,Pagos personales,,1000,Cristy Torres
+2025-11-27,Verdura,Insumos,Frutas Luis ,1000,Julián Anzaldúa Guitrón
+2025-11-27,Microdin,Insumos,Seven Eleven,23,Julián Anzaldúa Guitrón
+2025-11-27,Coca,Consumo empleados,Seven Eleven,45,Julián Anzaldúa Guitrón
+2025-11-27,Aguas,Insumos,Aguas SLW,750,Julián Anzaldúa Guitrón
+2025-11-27,Pan,Insumos,Fresh,250,Julián Anzaldúa Guitrón
+2025-11-27,Taxi Miguel,Transporte,Taxi Miguel,100,Julián Anzaldúa Guitrón
+2025-11-27,Regalos,Pagos personales,Regalo,1000,Julián Anzaldúa Guitrón
+2025-11-27,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-28,Salchicha y coca,Insumos,Seven Eleven,108,Julián Anzaldúa Guitrón
+2025-11-28,Vasos,Consumo empleados,Seven Eleven,28,Julián Anzaldúa Guitrón
+2025-11-28,Taxi Nicole,Transporte,Taxi Nicole,100,Julián Anzaldúa Guitrón
+2025-11-28,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-11-28,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-11-29,Coca ,Consumo empleados,Seven Eleven ,50,Julián Anzaldúa Guitrón
+2025-11-29,Fabuloso ,Insumos,Seven Eleven ,200,Julián Anzaldúa Guitrón
+2025-11-29,"Pan, aguacate y salchicha ",Insumos,Fresh,300,Julián Anzaldúa Guitrón
+2025-11-29,Julián (jabón),Insumos,Julian,850,Julián Anzaldúa Guitrón
+2025-11-29,Verdura,Insumos,Frutas Luis ,900,Julián Anzaldúa Guitrón
+2025-11-29,Taxi Checo ,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-11-29,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-11-29,Lulú,Empleados / Mano de obra,Lulu,1200,Julián Anzaldúa Guitrón
+2025-11-29,Nicole,Empleados / Mano de obra,Nicole,3040,Julián Anzaldúa Guitrón
+2025-11-29,Papel,Consumo empleados,Seven Eleven ,42,Julián Anzaldúa Guitrón
+2025-11-29,Tarjeta,Pagos personales,Julian,1000,Julián Anzaldúa Guitrón
+2025-11-30,Verdura,Insumos,Frutas Luis ,900,Julián Anzaldúa Guitrón
+2025-11-30,Pan,Insumos,Fresh,300,Julián Anzaldúa Guitrón
+2025-11-30,Coca,Consumo empleados,Seven Eleven,47,Julián Anzaldúa Guitrón
+2025-11-30,Cena,Consumo empleados,Joggi,590,Julián Anzaldúa Guitrón
+2025-11-30,Vasos,Consumo empleados,Seven Eleven,37,Julián Anzaldúa Guitrón
+2025-11-30,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-11-30,Sueldos,Empleados / Mano de obra,Sueldos varios,11800,Julián Anzaldúa Guitrón
+2025-11-30,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-01,Verdura,Insumos,Frutas Luis,500,Julián Anzaldúa Guitrón
+2025-12-01,Coca,Consumo empleados,Seven eleven,56,Julián Anzaldúa Guitrón
+2025-12-01,Tortugas de chocolate,Insumos,Tortugas de Chocolate,280,Julián Anzaldúa Guitrón
+2025-12-01,Nicole,Empleados / Mano de obra,Sueldo / prestamo Nicole,300,Julián Anzaldúa Guitrón
+2025-12-01,Taxi Nicole,Transporte,Taxi Nicole,100,Julián Anzaldúa Guitrón
+2025-12-01,Pan y Verdura,Insumos,Fresh y frutas luis,750,Julián Anzaldúa Guitrón
+2025-12-01,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-01,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-01,Sueldo salado,Empleados / Mano de obra,Sueldo Salado,1000,Julián Anzaldúa Guitrón
+2025-12-01,Cristy Gasolina,Transporte,Gasolina,500,Julián Anzaldúa Guitrón
+2025-12-02,Verdura,Insumos,Frutas Luis,160,Julián Anzaldúa Guitrón
+2025-12-02,Raid,Insumos,Farmacia Guadalajara,115,Julián Anzaldúa Guitrón
+2025-12-02,Pan,Insumos,Fresh,270,Julián Anzaldúa Guitrón
+2025-12-02,Cofias,Insumos,Cofias,400,Julián Anzaldúa Guitrón
+2025-12-02,Cloro,Insumos,Seven Eleven,20,Julián Anzaldúa Guitrón
+2025-12-03,Papa,Propina ,El señor de la papa,50,Cristy Torres
+2025-12-03,Verdura ,Insumos,Frutas luis,870,Cristy Torres
+2025-12-03,Pan,Insumos,Fress,300,Cristy Torres
+2025-12-03,Coca,Consumo empleados,Seven,55,Cristy Torres
+2025-12-03,Aguas ,Insumos,Aguas frescas SLW ,750,Cristy Torres
+2025-12-03,Tarjeta ,Pagos personales,Julián,1000,Cristy Torres
+2025-12-03,Taxi,Transporte,Indraiber ,100,Cristy Torres
+2025-12-02,Sueldo salado,Empleados / Mano de obra,Sueldo Salado,1000,Julián Anzaldúa Guitrón
+2025-12-02,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-12-02,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-04,Coca,Consumo empleados,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-04,Papel de baño,Consumo empleados,Seven eleven,30,Julián Anzaldúa Guitrón
+2025-12-04,Sueldos,Empleados / Mano de obra,Sueldos varios,3500,Julián Anzaldúa Guitrón
+2025-12-04,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-05,Verdura,Insumos,Frutas Luis,500,Julián Anzaldúa Guitrón
+2025-12-05,Pan y aguacate ,Insumos,Fresh,281,Julián Anzaldúa Guitrón
+2025-12-05,Coca,Consumo empleados,Seven Eleven,56,Julián Anzaldúa Guitrón
+2025-12-05,Taxi checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-12-05,Taxi Nicole,Transporte,Taxi nicole,120,Julián Anzaldúa Guitrón
+2025-12-05,Coca y vasos,Consumo empleados,Seven Eleven,87,Julián Anzaldúa Guitrón
+2025-12-05,Brownies ,Insumos,Chica brownie,240,Julián Anzaldúa Guitrón
+2025-12-05,Sueldo Rona,Empleados / Mano de obra,Sueldo Rona,1200,Julián Anzaldúa Guitrón
+2025-12-05,Sueldo salado,Empleados / Mano de obra,Sueldo Salado,1000,Julián Anzaldúa Guitrón
+2025-12-05,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-05,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-12-06,Julián,Pagos personales,Julián,3040,Julián Anzaldúa Guitrón
+2025-12-06,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-12-06,Julián,Pagos personales,Julián,2200,Julián Anzaldúa Guitrón
+2025-12-06,Coca y vasos,Consumo empleados,Seven eleven,81,Julián Anzaldúa Guitrón
+2025-12-06,Coca y papel,Consumo empleados,Seven eleven,90,Julián Anzaldúa Guitrón
+2025-12-06,Taxi cubano,Transporte,Taxi Miguel,100,Julián Anzaldúa Guitrón
+2025-12-06,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-06,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-12-07,Sal y coca,Insumos,Seven eleven,90,Julián Anzaldúa Guitrón
+2025-12-07,Verdura,Insumos,Frutas Luis,320,Julián Anzaldúa Guitrón
+2025-12-07,Moto,Transporte,Moto,82,Julián Anzaldúa Guitrón
+2025-12-07,Chicles,Consumo empleados,Seven eleven,15,Julián Anzaldúa Guitrón
+2025-12-07,Julián,Empleados / Mano de obra,Sueldo,3500,Julián Anzaldúa Guitrón
+2025-12-07,Coca,Consumo empleados,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-07,Cena,Consumo empleados,Cena,730,Julián Anzaldúa Guitrón
+2025-12-07,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-07,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-12-07,Rona,Empleados / Mano de obra,Sueldo rona,950,Julián Anzaldúa Guitrón
+2025-12-07,Verdura,Insumos,Frutas Luis,200,Julián Anzaldúa Guitrón
+2025-12-08,Verdura,Insumos,Frutas Luis,500,Julián Anzaldúa Guitrón
+2025-12-08,Coca,Consumo empleados,Seven eleven,48,Julián Anzaldúa Guitrón
+2025-12-08,Papel y sal,Insumos,Seven Eleven,67,Julián Anzaldúa Guitrón
+2025-12-08,Medicamentos,Pagos personales,Medicamentos,33,Julián Anzaldúa Guitrón
+2025-12-08,Gasolina,Transporte,Gasolina,500,Julián Anzaldúa Guitrón
+2025-12-08,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-09,Verdura,Insumos,Frutas Luis,500,Julián Anzaldúa Guitrón
+2025-12-09,Coca y vasos,Consumo empleados,Seven eleven,92,Julián Anzaldúa Guitrón
+2025-12-09,Pan,Insumos,Fresh,200,Julián Anzaldúa Guitrón
+2025-12-09,Fibra,Insumos,Seven eleven,19,Julián Anzaldúa Guitrón
+2025-12-09,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-10,Papa,Transporte,Transporte desde Coss,50,Julián Anzaldúa Guitrón
+2025-12-10,Aguas de sabor,Insumos,Aguas SLW,750,Julián Anzaldúa Guitrón
+2025-12-10,Verdura,Insumos,Frutas Luis,462,Julián Anzaldúa Guitrón
+2025-12-10,Pan y aguacate ,Insumos,Fresh,200,Julián Anzaldúa Guitrón
+2025-12-10,Coca,Consumo empleados,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-10,Julián,Pagos personales,Pagos,2320,Julián Anzaldúa Guitrón
+2025-12-10,Brownies ,Insumos,Chica brownie,400,Julián Anzaldúa Guitrón
+2025-12-10,Envío,Transporte,Envío,79,Julián Anzaldúa Guitrón
+2025-12-10,Taxi Juan ,Transporte,Taxi Juan,120,Julián Anzaldúa Guitrón
+2025-12-10,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-12-11,Coca,Consumo empleados,Seven eleven,48,Julián Anzaldúa Guitrón
+2025-12-11,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-12-11,Verdura,Insumos,Frutas Luis,462,Julián Anzaldúa Guitrón
+2025-12-11,Tortilla,Insumos,Tortillería,120,Julián Anzaldúa Guitrón
+2025-12-11,Coca,Consumo empleados,Seven eleven,60,Julián Anzaldúa Guitrón
+2025-12-11,Aderezos,Insumos,Seven eleven,40,Julián Anzaldúa Guitrón
+2025-12-11,Taxi Nicole,Transporte,Taxi nicole,100,Julián Anzaldúa Guitrón
+2025-12-11,Pan,Insumos,Fresh,400,Julián Anzaldúa Guitrón
+2025-12-11,Sueldo Miguel,Empleados / Mano de obra,Sueldo Miguel,1350,Julián Anzaldúa Guitrón
+2025-12-11,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-12-11,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-11,Taxi Juan ,Transporte,Taxi Juan,120,Julián Anzaldúa Guitrón
+2025-12-12,Checo,Empleados / Mano de obra,Checo,200,Julián Anzaldúa Guitrón
+2025-12-12,Verdura,Insumos,Frutas Luis,950,Julián Anzaldúa Guitrón
+2025-12-12,Pan,Insumos,Fresh,300,Julián Anzaldúa Guitrón
+2025-12-12,Taxi Cristy Juan,Transporte,Taxi Cristy Juan,150,Julián Anzaldúa Guitrón
+2025-12-12,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-13,Verdura,Insumos,Frutas Luis,700,Julián Anzaldúa Guitrón
+2025-12-13,Tortillas,Insumos,Tortillería,100,Julián Anzaldúa Guitrón
+2025-12-13,Sal,Insumos,Seven eleven,29,Julián Anzaldúa Guitrón
+2025-12-13,Coca y vasos,Consumo empleados,Seven eleven,83,Julián Anzaldúa Guitrón
+2025-12-13,Julián,Empleados / Mano de obra,Sueldos varios,5360,Julián Anzaldúa Guitrón
+2025-12-13,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-13,Taxi Juan ,Transporte,Taxi Juan,170,Julián Anzaldúa Guitrón
+2025-12-14,Coca,Consumo empleados,Seven eleven,48,Julián Anzaldúa Guitrón
+2025-12-14,Papel de baño,Consumo empleados,Seven eleven,43,Julián Anzaldúa Guitrón
+2025-12-14,Taxi Juan Cristy,Transporte,Taxi Juan Cristy,170,Julián Anzaldúa Guitrón
+2025-12-14,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-14,Sueldo Julián ,Empleados / Mano de obra,Sueldo Julián,2500,Julián Anzaldúa Guitrón
+2025-12-14,Cena,Consumo empleados,Cena,580,Julián Anzaldúa Guitrón
+2025-12-15,Verdura,Insumos,Frutas Luis,500,Julián Anzaldúa Guitrón
+2025-12-15,Taxi,Transporte,Taxi,120,Julián Anzaldúa Guitrón
+2025-12-15,Desengrasante,Insumos,Desengrasante,200,Julián Anzaldúa Guitrón
+2025-12-15,Brownies ,Insumos,Chica brownie,300,Julián Anzaldúa Guitrón
+2025-12-15,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-15,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-15,Cloro y Fabuloso,Insumos,Seven eleven,100,Julián Anzaldúa Guitrón
+2025-12-16,Vasos y coca,Consumo empleados,Seven eleven,93,Julián Anzaldúa Guitrón
+2025-12-16,Verdura,Insumos,Frutas Luis,404,Julián Anzaldúa Guitrón
+2025-12-16,Lulu,Empleados / Mano de obra,Lulu,1200,Julián Anzaldúa Guitrón
+2025-12-16,Rollos tickets,Insumos,Rollos tickets,1520,Julián Anzaldúa Guitrón
+2025-12-16,Hielo,Insumos,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-16,Taxis,Transporte,Taxis,300,Julián Anzaldúa Guitrón
+2025-12-16,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-17,Comida Julián,Pagos personales,Comida Julián,120,Julián Anzaldúa Guitrón
+2025-12-17,Verdura,Insumos,Frutas Luis,426,Julián Anzaldúa Guitrón
+2025-12-17,Afilador,Insumos,Afilador,200,Julián Anzaldúa Guitrón
+2025-12-17,Agua,Consumo empleados,Seven eleven,110,Julián Anzaldúa Guitrón
+2025-12-17,Coca y vasos,Consumo empleados,Seven eleven,76,Julián Anzaldúa Guitrón
+2025-12-17,Checo,Empleados / Mano de obra,Checo,500,Julián Anzaldúa Guitrón
+2025-12-17,Taxi,Transporte,Taxi,137,Julián Anzaldúa Guitrón
+2025-12-17,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-17,Fibra,Insumos,Seven eleven,100,Julián Anzaldúa Guitrón
+2025-12-17,Cámaras,Servicios / Mantenimiento,Cámaras,800,Julián Anzaldúa Guitrón
+2025-12-17,Hielo ,Insumos,Seven eleven,55,Julián Anzaldúa Guitrón
+2025-12-17,Taxi Daniela y Evelyn,Transporte,Taxis,200,Julián Anzaldúa Guitrón
+2025-12-17,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-18,Envío de coss,Transporte,Envio de coss,50,Julián Anzaldúa Guitrón
+2025-12-18,Verdura,Insumos,Frutas Luis,404,Julián Anzaldúa Guitrón
+2025-12-18,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-18,"Rollo, fabuloso, salchicha",Insumos,Seven eleven,122,Julián Anzaldúa Guitrón
+2025-12-18,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-18,Domicilio,Transporte,Domicilio,79,Julián Anzaldúa Guitrón
+2025-12-18,Hielo,Insumos,Seven eleven,54,Julián Anzaldúa Guitrón
+2025-12-18,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-18,Taxi,Transporte,Taxi,300,Julián Anzaldúa Guitrón
+2025-12-18,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-12-19,Verdura,Insumos,Frutas Luis,730,Julián Anzaldúa Guitrón
+2025-12-19,Domicilio a Julián,Transporte,Domicilio,70,Julián Anzaldúa Guitrón
+2025-12-19,Coca y vasos,Consumo empleados,Seven eleven,90,Julián Anzaldúa Guitrón
+2025-12-19,Pan y Jamón,Consumo empleados,Seven eleven,130,Julián Anzaldúa Guitrón
+2025-12-19,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-12-19,Esponja,Insumos,Seven eleven,40,Julián Anzaldúa Guitrón
+2025-12-19,Taxi,Transporte,Taxi,140,Julián Anzaldúa Guitrón
+2025-12-19,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-19,Hielo,Insumos,Seven eleven,102,Julián Anzaldúa Guitrón
+2025-12-19,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-19,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-20,Verdura,Insumos,Frutas Luis,800,Julián Anzaldúa Guitrón
+2025-12-20,Vasos,Consumo empleados,Seven eleven,83,Julián Anzaldúa Guitrón
+2025-12-20,Tacos,Consumo empleados,Tacos,300,Julián Anzaldúa Guitrón
+2025-12-20,Envio de coss,Transporte,Envio de coss,50,Julián Anzaldúa Guitrón
+2025-12-20,Sueldo,Empleados / Mano de obra,Sueldo,3040,Julián Anzaldúa Guitrón
+2025-12-20,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-12-20,Rollo,Consumo empleados,Seven eleven,35,Julián Anzaldúa Guitrón
+2025-12-20,Hielo,Insumos,Seven eleven ,100,Julián Anzaldúa Guitrón
+2025-12-20,Taxi,Transporte,Taxi,200,Julián Anzaldúa Guitrón
+2025-12-20,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-21,Verdura,Insumos,Frutas Luis,300,Julián Anzaldúa Guitrón
+2025-12-21,Pan y aguacate ,Insumos,Fresh,500,Julián Anzaldúa Guitrón
+2025-12-21,Barbacoa,Consumo empleados,Barbacoa,500,Julián Anzaldúa Guitrón
+2025-12-21,Tortilla,Insumos,Seven eleven,20,Julián Anzaldúa Guitrón
+2025-12-21,Cena,Consumo empleados,Cena,150,Julián Anzaldúa Guitrón
+2025-12-21,Cena,Consumo empleados,Cena,435,Julián Anzaldúa Guitrón
+2025-12-21,Hielos,Insumos,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-21,Sueldo,Empleados / Mano de obra,Sueldo,3150,Julián Anzaldúa Guitrón
+2025-12-21,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-21,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-22,Esponja,Insumos,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-22,Trapeador y escoba,Insumos,Trapeador y escoba,411,Julián Anzaldúa Guitrón
+2025-12-22,Coca,Consumo empleados,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-22,Hielo,Insumos,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-22,Taxi Rona,Transporte,Taxi Rona,100,Julián Anzaldúa Guitrón
+2025-12-22,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-23,Verdura,Insumos,Frutas Luis,800,Julián Anzaldúa Guitrón
+2025-12-23,Refresco,Consumo empleados,Seven eleven,300,Julián Anzaldúa Guitrón
+2025-12-23,Pan y aguacate ,Insumos,Fresh,250,Julián Anzaldúa Guitrón
+2025-12-23,Coca,Consumo empleados,Seven eleven,56,Julián Anzaldúa Guitrón
+2025-12-23,Julián,Pagos personales,Julián,1500,Julián Anzaldúa Guitrón
+2025-12-23,Coca y vasos,Consumo empleados,Seven eleven,90,Julián Anzaldúa Guitrón
+2025-12-23,Taxi Nicole,Transporte,Taxi nicole,100,Julián Anzaldúa Guitrón
+2025-12-23,Hielo,Insumos,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-23,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-23,Taxi,Transporte,Taxi,300,Julián Anzaldúa Guitrón
+2025-12-24,Coca,Consumo empleados,Seven eleven,50,Julián Anzaldúa Guitrón
+2025-12-24,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-12-24,Checo,Empleados / Mano de obra,Checo,1150,Julián Anzaldúa Guitrón
+2025-12-24,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-26,Conserva,Otro,Otro,300,Julián Anzaldúa Guitrón
+2025-12-26,"Coca, microdin y galletas",Consumo empleados,Farmacia Guadalajara,130,Julián Anzaldúa Guitrón
+2025-12-26,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón
+2025-12-26,Aguas Frescas ,Insumos,Aguas frescas SLW ,750,Julián Anzaldúa Guitrón
+2025-12-26,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-26,Salchicha,Insumos,Seven eleven,80,Julián Anzaldúa Guitrón
+2025-12-26,Sueldo,Empleados / Mano de obra,Sueldo,1000,Julián Anzaldúa Guitrón
+2025-12-26,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-26,Taxi,Transporte,Taxi,200,Julián Anzaldúa Guitrón
+2025-12-27,Verdura,Insumos,Frutas Luis,400,Julián Anzaldúa Guitrón
+2025-12-27,Pan,Insumos,Fresh,400,Julián Anzaldúa Guitrón
+2025-12-27,Envio de coss,Transporte,Envio de coss,50,Julián Anzaldúa Guitrón
+2025-12-27,Coca y vasos,Consumo empleados,Seven eleven,100,Julián Anzaldúa Guitrón
+2025-12-27,Taxi Checo,Transporte,Taxi Checo ,150,Julián Anzaldúa Guitrón
+2025-12-27,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-27,Sueldo,Empleados / Mano de obra,Sueldo,2640,Julián Anzaldúa Guitrón
+2025-12-27,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-28,Verdura,Insumos,Frutas Luis,400,Julián Anzaldúa Guitrón
+2025-12-28,Afilador,Servicios / Mantenimiento,Afilador,200,Julián Anzaldúa Guitrón
+2025-12-28,Coca y papel,Consumo empleados,Seven eleven,81,Julián Anzaldúa Guitrón
+2025-12-28,Pan,Insumos,Fresh,400,Julián Anzaldúa Guitrón
+2025-12-28,Coca,Consumo empleados,Seven eleven,45,Julián Anzaldúa Guitrón
+2025-12-28,Cena,Consumo empleados,Cena,145,Julián Anzaldúa Guitrón
+2025-12-28,Cena,Consumo empleados,Cena,440,Julián Anzaldúa Guitrón
+2025-12-28,Cena,Consumo empleados,Cena,150,Julián Anzaldúa Guitrón
+2025-12-28,Sueldo,Empleados / Mano de obra,Sueldo,2500,Julián Anzaldúa Guitrón
+2025-12-28,Gasolina,Transporte,Gasolina,500,Julián Anzaldúa Guitrón
+2025-12-28,Tarjeta,Pagos personales,Julián,1000,Julián Anzaldúa Guitrón
+2025-12-29,Verdura y pan,Insumos,Fresh y Frutas Luis,600,Julián Anzaldúa Guitrón
+2025-12-29,Coca y vasos,Consumo empleados,Seven eleven,80,Julián Anzaldúa Guitrón
+2025-12-29,Lulu,Pagos personales,Lulu,1200,Julián Anzaldúa Guitrón
+2025-12-29,Tarjeta,Pagos personales,Julián,2000,Julián Anzaldúa Guitrón
+2025-12-30,Verdura,Insumos,Frutas Luis,400,Julián Anzaldúa Guitrón
+2025-12-30,Coca,Consumo empleados,Seven eleven,56,Julián Anzaldúa Guitrón
+2025-12-30,Pan,Insumos,Fresh,200,Julián Anzaldúa Guitrón
+2025-12-30,Taxi,Transporte,Taxi,100,Julián Anzaldúa Guitrón
+2025-12-30,Tarjeta,Pagos personales,Tarjeta,2000,Julián Anzaldúa Guitrón
+2025-12-30,Taxi,Transporte,Taxi,200,Julián Anzaldúa Guitrón
+2025-12-31,Verdura,Insumos,Frutas Luis,145,Julián Anzaldúa Guitrón
+2025-12-31,Afilador,Servicios / Mantenimiento,Afilador,200,Julián Anzaldúa Guitrón
+2025-12-31,Coca y papel,Consumo empleados,Seven eleven,85,Julián Anzaldúa Guitrón
+2025-12-31,Vasos y aceite,Consumo empleados,Seven eleven,183,Julián Anzaldúa Guitrón
+2025-12-31,Envio de coss,Transporte,Envio de coss,70,Julián Anzaldúa Guitrón
+2025-12-31,Market,Servicios / Mantenimiento,Market,750,Julián Anzaldúa Guitrón
+2025-12-31,Checo,Empleados / Mano de obra,Checo,1000,Julián Anzaldúa Guitrón
+2025-12-31,Tarjeta,Pagos personales,Tarjeta,2000,Julián Anzaldúa Guitrón
+2025-12-31,Taxi Daniela,Transporte,Taxi Daniela,100,Julián Anzaldúa Guitrón
+2025-12-31,Taxi Checo,Transporte,Taxi Checo ,100,Julián Anzaldúa Guitrón

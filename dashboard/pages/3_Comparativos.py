@@ -11,6 +11,9 @@ st.set_page_config(
     layout="centered"
 )
 
+from auth import require_auth
+require_auth()
+
 st.title("📊 Comparativos")
 
 # =================================================

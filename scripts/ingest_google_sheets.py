@@ -18,7 +18,10 @@ Configuration:
     config/sheets.yaml - spreadsheet ID, credentials path, header mappings
 """
 
+import os
 import sys
+import json
+import tempfile
 from pathlib import Path
 from typing import Optional
 
@@ -376,15 +379,31 @@ def main():
     sheets_config = load_sheets_config()
     schema = load_schema_config()
 
-    credentials_path = sheets_config.get("credentials_path")
     spreadsheet_name = sheets_config.get("spreadsheet_name")
     spreadsheet_id = sheets_config.get("spreadsheet_id")
 
-    if not credentials_path:
-        print("[ERROR] credentials_path not configured in config/sheets.yaml", file=sys.stderr)
-        sys.exit(1)
+    # Resolve credentials: env var JSON > env var path > config file path
+    credentials_json = os.environ.get("GOOGLE_CREDENTIALS_JSON")
+    credentials_path = os.environ.get(
+        "GOOGLE_CREDENTIALS_PATH",
+        sheets_config.get("credentials_path"),
+    )
 
-    if not Path(credentials_path).exists():
+    if credentials_json:
+        # Write JSON string from env to a temp file
+        tmp = tempfile.NamedTemporaryFile(
+            mode="w", suffix=".json", delete=False
+        )
+        tmp.write(credentials_json)
+        tmp.close()
+        credentials_path = tmp.name
+        print("  Using credentials from GOOGLE_CREDENTIALS_JSON env var")
+    elif not credentials_path:
+        print("[ERROR] No credentials configured (set GOOGLE_CREDENTIALS_JSON, "
+              "GOOGLE_CREDENTIALS_PATH, or credentials_path in sheets.yaml)",
+              file=sys.stderr)
+        sys.exit(1)
+    elif not Path(credentials_path).exists():
         print(f"[ERROR] Credentials file not found: {credentials_path}", file=sys.stderr)
         sys.exit(1)
 
