@@ -422,5 +422,5 @@ with st.sidebar:
             st.error(f"Error al subir: {resp.status_code}")
 
     st.divider()
-    st.caption(f"Sesion: {st.user.name}")
-    st.button("Cerrar sesion", on_click=st.logout)
+    user_info = st.session_state.get("user_info", {})
+    st.caption(f"Sesion: {user_info.get('name', '')}")
