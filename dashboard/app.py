@@ -11,9 +11,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-from auth import require_auth
-require_auth()
-
 # =================================================
 # Helpers de fecha en espanol (sin dependencia de locale)
 # =================================================
@@ -421,7 +418,3 @@ with st.sidebar:
         else:
             st.error(f"Error al subir: {resp.status_code}")
 
-    st.divider()
-    st.caption(f"Sesion: {st.user.name}")
-    if st.button("Cerrar sesion"):
-        st.logout()

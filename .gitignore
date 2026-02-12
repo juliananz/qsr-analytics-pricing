@@ -15,6 +15,7 @@ data/analytics/cost_sensitivity*.csv
 
 # Secrets
 .secrets/
+secrets/
 
 # OS
 .DS_Store

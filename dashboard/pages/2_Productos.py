@@ -4,8 +4,6 @@ from datetime import timedelta
 
 st.set_page_config(page_title="Productos", layout="centered")
 
-from auth import require_auth
-require_auth()
 
 st.title("📦 Productos")
 

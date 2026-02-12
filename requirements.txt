@@ -6,4 +6,3 @@ pyyaml
 gspread>=5.0
 google-auth>=2.0
 plotly
-Authlib>=1.3.2

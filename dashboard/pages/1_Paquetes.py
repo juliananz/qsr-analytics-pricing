@@ -3,8 +3,6 @@ import pandas as pd
 
 st.set_page_config(page_title="Paquetes", layout="centered")
 
-from auth import require_auth
-require_auth()
 
 st.title("📦 Paquetes")
 

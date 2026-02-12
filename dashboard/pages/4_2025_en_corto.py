@@ -6,8 +6,6 @@ import plotly.express as px
 
 st.set_page_config(page_title="2025 en corto", layout="centered")
 
-from auth import require_auth
-require_auth()
 
 # CSS personalizado para efecto "wrapped"
 st.markdown("""
