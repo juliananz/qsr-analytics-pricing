@@ -376,35 +376,44 @@ st.markdown("""
 weekday_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 weekday_spanish = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
 
-weekday_sales = (
+weekday_totals = (
     df_selected
     .groupby("weekday")["net_amount"]
     .sum()
     .reindex(weekday_order)
-    .reset_index()
 )
 
-weekday_sales["weekday_es"] = weekday_spanish
+# Count how many times each weekday occurred in the selected year
+weekday_counts = (
+    df_selected
+    .groupby("weekday")["sale_date"]
+    .nunique()
+    .reindex(weekday_order)
+)
+
+weekday_avg = (weekday_totals / weekday_counts).reset_index()
+weekday_avg.columns = ["weekday", "net_amount"]
+weekday_avg["weekday_es"] = weekday_spanish
 
 fig_weekday = go.Figure()
 fig_weekday.add_trace(go.Bar(
-    x=weekday_sales["weekday_es"],
-    y=weekday_sales["net_amount"],
-    marker_color=['#667eea' if i != weekday_sales["net_amount"].idxmax() else '#ff6b6b' 
-                  for i in range(len(weekday_sales))],
+    x=weekday_avg["weekday_es"],
+    y=weekday_avg["net_amount"],
+    marker_color=['#667eea' if i != weekday_avg["net_amount"].idxmax() else '#ff6b6b'
+                  for i in range(len(weekday_avg))],
     hovertemplate='<b>%{x}</b><br>$%{y:,.0f}<extra></extra>'
 ))
 fig_weekday.update_layout(
     height=300,
     showlegend=False,
     xaxis_title="Día",
-    yaxis_title="Ventas",
+    yaxis_title="Venta promedio por día",
     margin=dict(l=0, r=0, t=0, b=0)
 )
 st.plotly_chart(fig_weekday, use_container_width=True)
 
-best_day = weekday_sales.loc[weekday_sales["net_amount"].idxmax(), "weekday_es"]
-best_day_sales = weekday_sales["net_amount"].max()
+best_day = weekday_avg.loc[weekday_avg["net_amount"].idxmax(), "weekday_es"]
+best_day_avg = weekday_avg["net_amount"].max()
 
 st.markdown(f"""
 <div class="stat-card">
@@ -413,7 +422,7 @@ st.markdown(f"""
         {best_day}
     </div>
     <div style="font-size: 14px; color: #666;">
-        Con un promedio de ${best_day_sales / df_selected[df_selected['weekday'] == weekday_order[weekday_spanish.index(best_day)]]['sale_date'].nunique():,.0f} por día
+        Con un promedio de ${best_day_avg:,.0f} por día
     </div>
 </div>
 """, unsafe_allow_html=True)

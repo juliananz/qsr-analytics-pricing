@@ -84,9 +84,57 @@ def load_margins():
         return pd.DataFrame()
 
 
+@st.cache_data
+def load_recipes():
+    try:
+        return pd.read_csv("data/processed_data/recipe_items.csv")
+    except FileNotFoundError:
+        return pd.DataFrame()
+
+
+@st.cache_data
+def load_bundle_components():
+    try:
+        return pd.read_csv("data/processed_data/bundle_components.csv")
+    except FileNotFoundError:
+        return pd.DataFrame()
+
+
+@st.cache_data
+def load_ingredient_costs():
+    try:
+        return pd.read_csv("data/processed_data/dim_input_costs.csv")
+    except FileNotFoundError:
+        return pd.DataFrame()
+
+
+@st.cache_data
+def load_sales_raw():
+    try:
+        df = pd.read_parquet(
+            "data/analytics/fact_sales_raw.parquet",
+            columns=["sale_date", "orden"],
+        )
+    except FileNotFoundError:
+        return pd.DataFrame()
+    except KeyError:
+        # "orden" column missing from parquet schema
+        return pd.DataFrame()
+    df["sale_date"] = pd.to_datetime(df["sale_date"]).dt.normalize()
+    # Clean orden: drop nulls first, then cast, strip, drop blanks
+    df = df.dropna(subset=["orden"])
+    df["orden"] = df["orden"].astype(str).str.strip()
+    df = df[~df["orden"].isin(["", "nan", "None"])]
+    return df
+
+
 cortes_df = load_cortes()
 gastos_df = load_gastos()
 margins_df = load_margins()
+sales_raw_df = load_sales_raw()
+recipes_df = load_recipes()
+bundles_df = load_bundle_components()
+ingredients_df = load_ingredient_costs()
 
 # =================================================
 # Estado vacio: sin cortes
@@ -119,9 +167,13 @@ ventas_total = ventas_efectivo + ventas_tarjeta + ventas_app
 
 if not margins_df.empty:
     today_margins = margins_df[margins_df["sale_date"] == ref_date]
-    ganancia_esperada = today_margins["gross_margin"].sum()
+    ganancia_bruta = today_margins["gross_margin"].sum()
 else:
-    ganancia_esperada = 0
+    ganancia_bruta = 0
+
+# IVA: prepared food in Mexico includes 16% IVA in the price
+iva_estimado = ventas_total * 16 / 116
+ganancia_esperada = ganancia_bruta - iva_estimado
 
 color_ganancia = "#09ab3b" if ganancia_esperada >= 0 else "#ff4b4b"
 
@@ -137,6 +189,13 @@ st.markdown(
     </div>
     <div style="flex: 1; background-color: #f0f2f6; padding: 20px;
                 border-radius: 8px; text-align: center;">
+        <div style="font-size: 14px; color: #555;">IVA estimado (16%)</div>
+        <div style="font-size: 32px; font-weight: 700; color: #ff8c00;">
+            {formato_moneda(iva_estimado)}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 20px;
+                border-radius: 8px; text-align: center;">
         <div style="font-size: 14px; color: #555;">Ganancia esperada</div>
         <div style="font-size: 32px; font-weight: 700; color: {color_ganancia};">
             {formato_moneda(ganancia_esperada)}
@@ -146,6 +205,38 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+# =================================================
+# Seccion 1b: Clientes y ticket promedio
+# =================================================
+if sales_raw_df.empty:
+    st.caption("Metricas de clientes no disponibles (sin datos de ordenes).")
+else:
+    today_orders = sales_raw_df[sales_raw_df["sale_date"] == ref_date]
+    num_customers = today_orders["orden"].nunique()
+    ticket_promedio = ventas_total / num_customers if num_customers > 0 else 0
+
+    st.markdown(
+        f"""
+<div style="display: flex; gap: 8px; margin-bottom: 16px;">
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Clientes</div>
+        <div style="font-size: 20px; font-weight: 600; color: #31333F;">
+            {num_customers:,}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Ticket promedio</div>
+        <div style="font-size: 20px; font-weight: 600; color: #31333F;">
+            {formato_moneda(ticket_promedio)}
+        </div>
+    </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
 # =================================================
 # Seccion 2: Desglose por forma de pago
@@ -217,6 +308,88 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+# =================================================
+# Seccion 2c: KPIs de carnes y papas
+# =================================================
+if not margins_df.empty and not recipes_df.empty and not ingredients_df.empty:
+    # Identify meat ingredients
+    meat_ingredients = set(
+        ingredients_df[ingredients_df["ingredient_group"] == "Carne"]["ingredient_name"]
+    )
+
+    # Build product_code → meat_units lookup
+    meat_per_product = (
+        recipes_df[recipes_df["ingredient_name"].isin(meat_ingredients)]
+        .groupby("product_code")["quantity"]
+        .sum()
+        .to_dict()
+    )
+
+    # Build bundle_code → meat_units and fries_units lookups
+    meat_per_bundle = {}
+    fries_per_bundle = {}
+    if not bundles_df.empty:
+        for bundle_code, group in bundles_df.groupby("bundle_code"):
+            meat_total = 0
+            fries_total = 0
+            for _, row in group.iterrows():
+                code = row["component_code"]
+                qty = row["quantity"]
+                if row["component_type"] in ("product", "side"):
+                    meat_total += meat_per_product.get(code, 0) * qty
+                    if code == "fries_full":
+                        fries_total += qty
+            meat_per_bundle[bundle_code] = meat_total
+            fries_per_bundle[bundle_code] = fries_total
+
+    # Calculate today's meat units and fries orders
+    today_sales = margins_df[margins_df["sale_date"] == ref_date]
+    total_meat = 0
+    total_fries = 0
+    for _, row in today_sales.iterrows():
+        qty = row["quantity"]
+        bc = row.get("bundle_code")
+        pc = row.get("product_code")
+        if pd.notna(bc):
+            total_meat += meat_per_bundle.get(bc, 0) * qty
+            total_fries += fries_per_bundle.get(bc, 0) * qty
+        else:
+            total_meat += meat_per_product.get(pc, 0) * qty
+            if pc == "fries_full":
+                total_fries += qty
+
+    venta_por_carne = ventas_total / total_meat if total_meat > 0 else 0
+    ratio_carne_papas = total_meat / total_fries if total_fries > 0 else 0
+
+    st.markdown(
+        f"""
+<div style="display: flex; gap: 8px; margin-bottom: 20px;">
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Carnes vendidas</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {total_meat:,.0f}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Venta / carne</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {formato_moneda(venta_por_carne)}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Carnes / Papas</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {ratio_carne_papas:.2f}
+        </div>
+    </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
 # =================================================
 # Seccion 3: Gastos del dia (total)
@@ -348,14 +521,23 @@ week_ventas = (
 week_gastos_df = gastos_df[
     (gastos_df["fecha"] >= week_start) & (gastos_df["fecha"] <= ref_date)
 ]
-week_gastos = week_gastos_df["monto"].sum() if not week_gastos_df.empty else 0
 
-week_resultado = week_ventas - week_gastos
-color_week = "#09ab3b" if week_resultado >= 0 else "#ff4b4b"
+week_iva = week_ventas * 16 / 116
+
+if not margins_df.empty:
+    week_margins = margins_df[
+        (margins_df["sale_date"] >= week_start) & (margins_df["sale_date"] <= ref_date)
+    ]
+    week_ganancia_bruta = week_margins["gross_margin"].sum()
+else:
+    week_ganancia_bruta = 0
+
+week_ganancia = week_ganancia_bruta - week_iva
+color_week_ganancia = "#09ab3b" if week_ganancia >= 0 else "#ff4b4b"
 
 st.markdown(
     f"""
-<div style="display: flex; gap: 8px; margin-bottom: 20px;">
+<div style="display: flex; gap: 8px; margin-bottom: 8px;">
     <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
                 border-radius: 8px; text-align: center;">
         <div style="font-size: 13px; color: #555;">Ventas</div>
@@ -363,6 +545,62 @@ st.markdown(
             {formato_moneda(week_ventas)}
         </div>
     </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">IVA estimado</div>
+        <div style="font-size: 20px; font-weight: 600; color: #ff8c00;">
+            {formato_moneda(week_iva)}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Ganancia esperada</div>
+        <div style="font-size: 20px; font-weight: 600; color: {color_week_ganancia};">
+            {formato_moneda(week_ganancia)}
+        </div>
+    </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
+
+if not sales_raw_df.empty:
+    week_orders = sales_raw_df[
+        (sales_raw_df["sale_date"] >= week_start)
+        & (sales_raw_df["sale_date"] <= ref_date)
+    ]
+    week_customers = week_orders["orden"].nunique()
+    week_ticket = week_ventas / week_customers if week_customers > 0 else 0
+
+    st.markdown(
+        f"""
+<div style="display: flex; gap: 8px; margin-bottom: 8px;">
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Clientes</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {week_customers:,}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Ticket promedio</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {formato_moneda(week_ticket)}
+        </div>
+    </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
+
+week_gastos = week_gastos_df["monto"].sum() if not week_gastos_df.empty else 0
+week_resultado = week_ventas - week_gastos
+color_week = "#09ab3b" if week_resultado >= 0 else "#ff4b4b"
+
+st.markdown(
+    f"""
+<div style="display: flex; gap: 8px; margin-bottom: 8px;">
     <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
                 border-radius: 8px; text-align: center;">
         <div style="font-size: 13px; color: #555;">Gastos</div>
@@ -381,6 +619,57 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
+# Weekly meat & fries KPIs
+if not margins_df.empty and not recipes_df.empty and not ingredients_df.empty:
+    week_sales = margins_df[
+        (margins_df["sale_date"] >= week_start) & (margins_df["sale_date"] <= ref_date)
+    ]
+    week_meat = 0
+    week_fries = 0
+    for _, row in week_sales.iterrows():
+        qty = row["quantity"]
+        bc = row.get("bundle_code")
+        pc = row.get("product_code")
+        if pd.notna(bc):
+            week_meat += meat_per_bundle.get(bc, 0) * qty
+            week_fries += fries_per_bundle.get(bc, 0) * qty
+        else:
+            week_meat += meat_per_product.get(pc, 0) * qty
+            if pc == "fries_full":
+                week_fries += qty
+
+    week_venta_por_carne = week_ventas / week_meat if week_meat > 0 else 0
+    week_ratio_carne_papas = week_meat / week_fries if week_fries > 0 else 0
+
+    st.markdown(
+        f"""
+<div style="display: flex; gap: 8px; margin-bottom: 20px;">
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Carnes vendidas</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {week_meat:,.0f}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Venta / carne</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {formato_moneda(week_venta_por_carne)}
+        </div>
+    </div>
+    <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
+                border-radius: 8px; text-align: center;">
+        <div style="font-size: 13px; color: #555;">Carnes / Papas</div>
+        <div style="font-size: 18px; font-weight: 600; color: #31333F;">
+            {week_ratio_carne_papas:.2f}
+        </div>
+    </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
 # =================================================
 # Sidebar: POS upload + logout

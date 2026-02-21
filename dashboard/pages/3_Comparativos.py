@@ -111,6 +111,7 @@ fig.update_layout(
     barmode="group",
     xaxis_title="Día",
     yaxis_title="Ventas",
+    yaxis_tickformat="$,.0f",
     legend_title="Periodo",
     height=350
 )
@@ -156,8 +157,9 @@ month_acc = (
     .reset_index()
 )
 
+avg_years = [y for y in completed_years if y != 2022]
 avg_month = (
-    month_acc[month_acc["year"].isin(completed_years)]
+    month_acc[month_acc["year"].isin(avg_years)]
     .groupby("day")["net_amount"]
     .mean()
     .reset_index()
@@ -178,7 +180,26 @@ pivot_month = plot_month.pivot(
 if pivot_month.empty:
     st.warning("No hay datos suficientes para mostrar el comparativo mensual.")
 else:
-    st.line_chart(pivot_month)
+    fig_month = go.Figure()
+    for col in pivot_month.columns:
+        dash = "dash" if col == "Promedio histórico" else None
+        fig_month.add_trace(go.Scatter(
+            x=pivot_month.index,
+            y=pivot_month[col],
+            name=str(col),
+            mode="lines",
+            line=dict(dash=dash),
+            hovertemplate="<b>%{x}</b> - %{meta}<br>$%{y:,.0f}<extra></extra>",
+            meta=[str(col)] * len(pivot_month),
+        ))
+    fig_month.update_layout(
+        xaxis_title="Día del mes",
+        yaxis_title="Ventas acumuladas",
+        yaxis_tickformat="$,.0f",
+        height=350,
+        legend_title="Año",
+    )
+    st.plotly_chart(fig_month, use_container_width=True)
 
 # -----------------------------
 # Bullets numéricos mensuales
@@ -224,8 +245,9 @@ ytd = (
 )
 
 # Promedio histórico (todos menos el actual)
+avg_years_ytd = [y for y in completed_years if y != 2022]
 avg_ytd = (
-    ytd[ytd["year"].isin(completed_years)]
+    ytd[ytd["year"].isin(avg_years_ytd)]
     .groupby("day_of_year")["net_amount"]
     .mean()
     .reset_index()
@@ -246,7 +268,32 @@ pivot_ytd = plot_ytd.pivot(
 if pivot_ytd.empty:
     st.warning("No hay datos suficientes para mostrar el comparativo anual.")
 else:
-    st.line_chart(pivot_ytd)
+    # Convert day_of_year to actual dates (using current year as reference)
+    ref_dates = pd.to_datetime(pivot_ytd.index.map(
+        lambda d: f"{current_year}-01-01"
+    )) + pd.to_timedelta(pivot_ytd.index - 1, unit="D")
+
+    fig_ytd = go.Figure()
+    for col in pivot_ytd.columns:
+        dash = "dash" if col == "Promedio histórico" else None
+        fig_ytd.add_trace(go.Scatter(
+            x=ref_dates,
+            y=pivot_ytd[col],
+            name=str(col),
+            mode="lines",
+            line=dict(dash=dash),
+            hovertemplate="<b>%{x|%d %b}</b> - %{meta}<br>$%{y:,.0f}<extra></extra>",
+            meta=[str(col)] * len(pivot_ytd),
+        ))
+    fig_ytd.update_layout(
+        xaxis_title="Fecha",
+        yaxis_title="Ventas acumuladas",
+        xaxis_tickformat="%d %b",
+        yaxis_tickformat="$,.0f",
+        height=400,
+        legend_title="Año",
+    )
+    st.plotly_chart(fig_ytd, use_container_width=True)
 
 # -----------------------------
 # Bullets numéricos
