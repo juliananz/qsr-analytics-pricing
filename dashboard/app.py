@@ -569,7 +569,7 @@ if not sales_raw_df.empty:
         (sales_raw_df["sale_date"] >= week_start)
         & (sales_raw_df["sale_date"] <= ref_date)
     ]
-    week_customers = week_orders["orden"].nunique()
+    week_customers = week_orders.groupby("sale_date")["orden"].nunique().sum()
     week_ticket = week_ventas / week_customers if week_customers > 0 else 0
 
     st.markdown(
