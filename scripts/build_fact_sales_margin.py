@@ -18,11 +18,17 @@ Schema del output (CONTRATO - NO CAMBIAR):
 - non_product_revenue: bool
 """
 
+import sys
 import pandas as pd
 import numpy as np
 from pathlib import Path
 import warnings
 from typing import Dict, Tuple
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 # ============================================================
@@ -271,48 +277,46 @@ def build_output_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 def print_audit_summary(output: pd.DataFrame) -> None:
     """Imprime resumen de auditoria"""
-    print("\n" + "=" * 60)
-    print("AUDIT SUMMARY")
-    print("=" * 60)
-    
-    print(f"\nTotal rows: {len(output):,}")
-    print(f"Date range: {output['sale_date'].min().date()} -> {output['sale_date'].max().date()}")
-    
+    logger.info("AUDIT SUMMARY")
+    logger.info("Total rows: %s", f"{len(output):,}")
+    logger.info(
+        "Date range: %s -> %s",
+        output["sale_date"].min().date(),
+        output["sale_date"].max().date(),
+    )
+
     # Costos estimados
     estimated = output["cost_estimated"].sum()
     est_pct = (estimated / len(output) * 100) if len(output) > 0 else 0
-    print(f"Estimated costs: {estimated:,} ({est_pct:.1f}%)")
-    
+    logger.info("Estimated costs: %s (%.1f%%)", f"{estimated:,}", est_pct)
+
     # Ingresos no operativos
     non_product = output["non_product_revenue"].sum()
-    print(f"Non-product revenue items: {non_product:,}")
-    
+    logger.info("Non-product revenue items: %s", f"{non_product:,}")
+
     # Metricas financieras
     total_margin = output["gross_margin"].sum()
     total_revenue = output["net_amount"].sum()
     avg_margin_pct = (total_margin / total_revenue * 100) if total_revenue > 0 else 0
-    
-    print(f"\nTotal gross margin: ${total_margin:,.0f}")
-    print(f"Total revenue: ${total_revenue:,.0f}")
-    print(f"Average margin %: {avg_margin_pct:.1f}%")
-    
+
+    logger.info("Total gross margin: $%s", f"{total_margin:,.0f}")
+    logger.info("Total revenue: $%s", f"{total_revenue:,.0f}")
+    logger.info("Average margin: %.1f%%", avg_margin_pct)
+
     # Productos con margen negativo
     neg_margin = output[output["gross_margin"] < 0]
     if len(neg_margin) > 0:
         neg_total = neg_margin.groupby("product_name")["gross_margin"].sum().sort_values()
-        print(f"\nWARNING: {len(neg_margin):,} items with negative margin")
-        print("Top 5 negative margin products:")
-        print(neg_total.head(5))
+        logger.warning("%s items with negative margin", f"{len(neg_margin):,}")
+        logger.warning("Top 5 negative margin products:\n%s", neg_total.head(5).to_string())
     else:
-        print("\nAll products have non-negative margins")
-    
+        logger.info("All products have non-negative margins")
+
     # Distribucion de costos estimados por revenue
     if output["cost_estimated"].sum() > 0:
         est_revenue = output[output["cost_estimated"]]["net_amount"].sum()
         total_rev = output["net_amount"].sum()
-        print(f"\nEstimated costs represent {est_revenue/total_rev*100:.1f}% of revenue")
-    
-    print("\n" + "=" * 60)
+        logger.info("Estimated costs represent %.1f%% of revenue", est_revenue / total_rev * 100)
 
 
 # ============================================================
@@ -320,42 +324,40 @@ def print_audit_summary(output: pd.DataFrame) -> None:
 # ============================================================
 
 def main():
-    print("=" * 60)
-    print("Building fact_sales_margin.parquet")
-    print("=" * 60)
-    
+    logger.info("Building fact_sales_margin.parquet")
+
     # --------------------------------------------------------
     # 1. CARGA DE DATOS
     # --------------------------------------------------------
-    print("\n[1/6] Loading data...")
-    
+    logger.info("[1/6] Loading data")
+
     sales = pd.read_parquet(SALES_FILE)
-    print(f"  - Sales: {len(sales):,} rows")
-    
+    logger.info("  Sales: %s rows", f"{len(sales):,}")
+
     # Mapeo de nombres
     mapping = pd.read_csv(MAPPING_FILE)
     mapping.columns = mapping.columns.str.strip()
     if "bundle_code" not in mapping.columns:
         mapping["bundle_code"] = None
-    
+
     # Costos
     product_costs = load_cost_map(PRODUCT_COST_FILE, "product_code")
     bundle_costs = load_cost_map(BUNDLE_COST_FILE, "bundle_code")
     expected_drink_cost = load_expected_drink_cost()
-    
-    print(f"  - Product costs: {len(product_costs):,}")
-    print(f"  - Bundle costs: {len(bundle_costs):,}")
-    print(f"  - Expected drink cost: ${expected_drink_cost:.2f}")
-    
+
+    logger.info("  Product costs: %s", f"{len(product_costs):,}")
+    logger.info("  Bundle costs: %s", f"{len(bundle_costs):,}")
+    logger.info("  Expected drink cost: $%.2f", expected_drink_cost)
+
     # --------------------------------------------------------
     # 2. NORMALIZACION Y MAPEO
     # --------------------------------------------------------
-    print("\n[2/6] Normalizing and mapping products...")
-    
+    logger.info("[2/6] Normalizing and mapping products")
+
     # Normalizar nombres
     sales["product_name_norm"] = sales["descripcion"].apply(normalize_text)
     mapping["raw_product_name_norm"] = mapping["raw_product_name"].apply(normalize_text)
-    
+
     # Merge con mapping
     sales = sales.merge(
         mapping[["raw_product_name_norm", "product_code", "bundle_code"]],
@@ -363,87 +365,90 @@ def main():
         right_on="raw_product_name_norm",
         how="left"
     )
-    
+
     mapped_count = sales["product_code"].notna().sum()
-    print(f"  - Mapped products: {mapped_count:,} / {len(sales):,} ({mapped_count/len(sales)*100:.1f}%)")
-    
+    logger.info(
+        "  Mapped products: %s / %s (%.1f%%)",
+        f"{mapped_count:,}",
+        f"{len(sales):,}",
+        mapped_count / len(sales) * 100,
+    )
+
     # --------------------------------------------------------
     # 3. FLAGS DE CONTROL
     # --------------------------------------------------------
-    print("\n[3/6] Setting control flags...")
-    
+    logger.info("[3/6] Setting control flags")
+
     # Asegurar sale_date como datetime
     sales["sale_date"] = pd.to_datetime(sales["sale_date"])
-    
+
     # Ingresos no operativos
     sales["non_product_revenue"] = sales["product_name_norm"].apply(
         lambda x: any(k in x for k in NON_PRODUCT_KEYWORDS)
     )
-    
+
     non_product_count = sales["non_product_revenue"].sum()
-    print(f"  - Non-product revenue items: {non_product_count:,}")
-    
+    logger.info("  Non-product revenue items: %s", f"{non_product_count:,}")
+
     # --------------------------------------------------------
     # 4. RESOLUCION DE COSTOS
     # --------------------------------------------------------
-    print("\n[4/6] Resolving unit costs...")
-    
+    logger.info("[4/6] Resolving unit costs")
+
     # Aplicar resolucion de costos
     sales[["unit_cost", "cost_estimated"]] = sales.apply(
         lambda row: resolve_unit_cost(row, product_costs, bundle_costs, expected_drink_cost),
         axis=1,
         result_type="expand"
     )
-    
+
     # Estadisticas
     estimated = sales["cost_estimated"].sum()
     est_pct = (estimated / len(sales) * 100) if len(sales) > 0 else 0
-    
-    print(f"  - Total items: {len(sales):,}")
-    print(f"  - Estimated costs: {estimated:,} ({est_pct:.1f}%)")
-    
+
+    logger.info("  Total items: %s", f"{len(sales):,}")
+    logger.info("  Estimated costs: %s (%.1f%%)", f"{estimated:,}", est_pct)
+
     # VALIDACION CRITICA: unit_cost nunca debe ser NaN
     if sales["unit_cost"].isna().any():
         nan_count = sales["unit_cost"].isna().sum()
         raise ValueError(f"CRITICAL ERROR: {nan_count} rows have NaN unit_cost after resolution")
-    
+
     # --------------------------------------------------------
     # 5. CALCULOS FINANCIEROS
     # --------------------------------------------------------
-    print("\n[5/6] Computing financial metrics...")
-    
+    logger.info("[5/6] Computing financial metrics")
+
     sales = compute_financial_metrics(sales)
-    
+
     total_margin = sales["gross_margin"].sum()
     total_revenue = sales["importe"].sum()
     avg_margin_pct = (total_margin / total_revenue * 100) if total_revenue > 0 else 0
-    
-    print(f"  - Total gross margin: ${total_margin:,.0f}")
-    print(f"  - Average margin %: {avg_margin_pct:.1f}%")
-    
+
+    logger.info("  Total gross margin: $%s", f"{total_margin:,.0f}")
+    logger.info("  Average margin: %.1f%%", avg_margin_pct)
+
     # --------------------------------------------------------
     # 6. CONSTRUCCION DEL OUTPUT
     # --------------------------------------------------------
-    print("\n[6/6] Building output...")
-    
+    logger.info("[6/6] Building output")
+
     output = build_output_dataframe(sales)
-    
+
     # Guardar
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     output.to_parquet(OUTPUT_FILE, index=False)
-    
-    print(f"\nWrote {OUTPUT_FILE}")
-    print(f"Rows: {len(output):,}")
-    print(f"Columns: {list(output.columns)}")
-    
+
+    logger.info("Wrote %s", OUTPUT_FILE)
+    logger.info("Rows: %s", f"{len(output):,}")
+    logger.info("Columns: %s", list(output.columns))
+
     # --------------------------------------------------------
     # AUDITORIA FINAL
     # --------------------------------------------------------
     print_audit_summary(output)
-    
-    print("\n" + "=" * 60)
-    print("DONE")
-    print("=" * 60)
+
+    logger.info("DONE")
 
 
 if __name__ == "__main__":

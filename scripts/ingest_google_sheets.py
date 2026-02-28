@@ -30,6 +30,11 @@ import yaml
 import gspread
 from google.oauth2.service_account import Credentials
 
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from src.utils.logging_config import get_logger
+
+logger = get_logger(__name__)
+
 
 # ============================================================
 # CONFIGURATION
@@ -232,7 +237,7 @@ def validate_cortes(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
     if not duplicates.empty:
         dup_dates = duplicates["fecha"].dt.strftime("%Y-%m-%d").unique()
         for d in dup_dates:
-            print(f"  [WARN] Duplicate date {d} found, keeping last entry")
+            logger.warning("Duplicate date %s found, keeping last entry", d)
         # Remove duplicates, keep last
         df = df.drop(duplicates.index)
 
@@ -332,12 +337,12 @@ def process_sheet(
     sheet_name = sheet_config["sheet_name"]
     header_mapping = sheet_config["header_mapping"]
 
-    print(f"\nProcessing {sheet_name}...")
+    logger.info("Processing %s", sheet_name)
 
     # Fetch data
     header_map, records = fetch_sheet_data(spreadsheet, sheet_name, header_mapping)
-    print(f"  Fetched {len(records)} rows")
-    print(f"  Mapped columns: {list(header_map.values())}")
+    logger.info("  Fetched %s rows", len(records))
+    logger.info("  Mapped columns: %s", list(header_map.values()))
 
     # Build DataFrame
     df = pd.DataFrame(records)
@@ -352,18 +357,18 @@ def process_sheet(
         errors = []
 
     if errors:
-        print(f"\n[ERROR] {sheet_name} validation failed:", file=sys.stderr)
+        logger.error("%s validation failed:", sheet_name)
         for err in errors[:20]:  # Limit error output
-            print(f"  {err}", file=sys.stderr)
+            logger.error("  %s", err)
         if len(errors) > 20:
-            print(f"  ... and {len(errors) - 20} more errors", file=sys.stderr)
+            logger.error("  ... and %s more errors", len(errors) - 20)
         return None
 
     # Report if rows were removed
     if len(df) < original_count:
-        print(f"  [INFO] Removed {original_count - len(df)} duplicate rows")
+        logger.info("  Removed %s duplicate rows", original_count - len(df))
 
-    print(f"  [OK] Validation passed ({len(df)} rows)")
+    logger.info("  Validation passed (%s rows)", len(df))
     return df
 
 
@@ -372,8 +377,7 @@ def process_sheet(
 # ============================================================
 
 def main():
-    print("Google Sheets Ingestion")
-    print("=" * 50)
+    logger.info("Google Sheets Ingestion")
 
     # Load config
     sheets_config = load_sheets_config()
@@ -397,37 +401,38 @@ def main():
         tmp.write(credentials_json)
         tmp.close()
         credentials_path = tmp.name
-        print("  Using credentials from GOOGLE_CREDENTIALS_JSON env var")
+        logger.info("Using credentials from GOOGLE_CREDENTIALS_JSON env var")
     elif not credentials_path:
-        print("[ERROR] No credentials configured (set GOOGLE_CREDENTIALS_JSON, "
-              "GOOGLE_CREDENTIALS_PATH, or credentials_path in sheets.yaml)",
-              file=sys.stderr)
+        logger.error(
+            "No credentials configured (set GOOGLE_CREDENTIALS_JSON, "
+            "GOOGLE_CREDENTIALS_PATH, or credentials_path in sheets.yaml)"
+        )
         sys.exit(1)
     elif not Path(credentials_path).exists():
-        print(f"[ERROR] Credentials file not found: {credentials_path}", file=sys.stderr)
+        logger.error("Credentials file not found: %s", credentials_path)
         sys.exit(1)
 
     # Authenticate
-    print(f"\nAuthenticating with {Path(credentials_path).name}...")
+    logger.info("Authenticating with %s", Path(credentials_path).name)
     client = get_client(credentials_path)
-    print("  [OK] Authenticated")
+    logger.info("Authenticated")
 
     # Open spreadsheet
-    print(f"\nOpening spreadsheet...")
+    logger.info("Opening spreadsheet")
     try:
         if spreadsheet_id:
             spreadsheet = client.open_by_key(spreadsheet_id)
         elif spreadsheet_name:
             spreadsheet = client.open(spreadsheet_name)
         else:
-            print("[ERROR] Neither spreadsheet_id nor spreadsheet_name configured", file=sys.stderr)
+            logger.error("Neither spreadsheet_id nor spreadsheet_name configured")
             sys.exit(1)
-        print(f"  [OK] Opened: {spreadsheet.title}")
+        logger.info("Opened: %s", spreadsheet.title)
     except gspread.exceptions.SpreadsheetNotFound:
-        print(f"[ERROR] Spreadsheet not found", file=sys.stderr)
+        logger.error("Spreadsheet not found")
         sys.exit(1)
     except gspread.exceptions.APIError as e:
-        print(f"[ERROR] API error: {e}", file=sys.stderr)
+        logger.error("API error: %s", e)
         sys.exit(1)
 
     # Process sheets
@@ -442,27 +447,25 @@ def main():
             else:
                 results[sheet_key] = df
         except Exception as e:
-            print(f"\n[ERROR] {sheet_key}: {e}", file=sys.stderr)
+            logger.error("%s: %s", sheet_key, e)
             all_valid = False
 
     # Only write if all valid
     if not all_valid:
-        print("\n" + "=" * 50)
-        print("Ingestion FAILED. No files written.", file=sys.stderr)
+        logger.error("Ingestion FAILED. No files written.")
         sys.exit(1)
 
     # Write outputs
-    print("\n" + "=" * 50)
-    print("Writing validated CSVs...")
+    logger.info("Writing validated CSVs")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     for sheet_key, df in results.items():
         output_path = OUTPUT_DIR / f"{sheet_key}_validated.csv"
         df.to_csv(output_path, index=False)
-        print(f"  Wrote {output_path} ({len(df)} rows)")
+        logger.info("  Wrote %s (%s rows)", output_path, len(df))
 
-    print("\nIngestion completed successfully.")
+    logger.info("Ingestion completed successfully")
 
 
 if __name__ == "__main__":
