@@ -123,8 +123,8 @@ def resolve_unit_cost(
     Orden de precedencia:
     1. Ingresos no operativos -> costo = precio (margen 0)
     2. Paquetes -> costo del bundle
-    3. Bebidas -> costo esperado
-    4. Extra aguacate -> costo fijo
+    3. Extra aguacate -> costo fijo (debe ir antes de bebidas porque "AGUA" es substring de "AGUACATE")
+    4. Bebidas -> costo esperado
     5. Producto mapeado -> costo del catalogo
     6. Fallback -> costo estimado basado en margen objetivo
     
@@ -151,13 +151,13 @@ def resolve_unit_cost(
         if cost is not None:
             return float(cost), False
     
-    # 3. Bebidas: usar costo esperado
-    if any(kw in name for kw in DRINK_KEYWORDS):
-        return expected_drink_cost, False
-    
-    # 4. Extra aguacate: costo fijo
+    # 3. Extra aguacate: costo fijo (antes de bebidas porque "AGUA" es substring de "AGUACATE")
     if "EXTRA AGUACATE" in name:
         return AVOCADO_COST, False
+
+    # 4. Bebidas: usar costo esperado
+    if any(kw in name for kw in DRINK_KEYWORDS):
+        return expected_drink_cost, False
     
     # 5. Producto mapeado: buscar en product_costs
     if pd.notna(row["product_code"]):
