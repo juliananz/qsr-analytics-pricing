@@ -1,3 +1,5 @@
+from datetime import date
+
 import streamlit as st
 import pandas as pd
 
@@ -131,6 +133,16 @@ def load_sales_raw():
 cortes_df = load_cortes()
 gastos_df = load_gastos()
 margins_df = load_margins()
+
+if not margins_df.empty:
+    _last_date = margins_df["sale_date"].max().date()
+    _days_old = (date.today() - _last_date).days
+    if _days_old > 1:
+        st.warning(
+            f"⚠️ Data is {_days_old} day(s) old. "
+            f"Last updated: {_last_date}. Check the pipeline."
+        )
+
 sales_raw_df = load_sales_raw()
 recipes_df = load_recipes()
 bundles_df = load_bundle_components()

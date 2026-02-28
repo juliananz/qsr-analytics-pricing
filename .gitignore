@@ -20,3 +20,12 @@ secrets/
 # OS
 .DS_Store
 nul
+
+# ops_app — runtime artifacts (SQLite DB and photo uploads stay local)
+ops_app/db/ops.sqlite
+ops_app/db/ops.sqlite-shm
+ops_app/db/ops.sqlite-wal
+ops_app/uploads/*
+!ops_app/uploads/.gitkeep
+ops_app/exports/*
+!ops_app/exports/.gitkeep
