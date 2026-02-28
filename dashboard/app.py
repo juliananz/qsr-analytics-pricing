@@ -330,34 +330,23 @@ if not margins_df.empty and not recipes_df.empty and not ingredients_df.empty:
     meat_per_bundle = {}
     fries_per_bundle = {}
     if not bundles_df.empty:
-        for bundle_code, group in bundles_df.groupby("bundle_code"):
-            meat_total = 0
-            fries_total = 0
-            for _, row in group.iterrows():
-                code = row["component_code"]
-                qty = row["quantity"]
-                if row["component_type"] in ("product", "side"):
-                    meat_total += meat_per_product.get(code, 0) * qty
-                    if code == "fries_full":
-                        fries_total += qty
-            meat_per_bundle[bundle_code] = meat_total
-            fries_per_bundle[bundle_code] = fries_total
+        relevant = bundles_df[bundles_df["component_type"].isin(("product", "side"))].copy()
+        relevant["meat_units"] = relevant["component_code"].map(meat_per_product).fillna(0) * relevant["quantity"]
+        relevant["fries_units"] = relevant["quantity"].where(relevant["component_code"] == "fries_full", 0)
+        meat_per_bundle = relevant.groupby("bundle_code")["meat_units"].sum().to_dict()
+        fries_per_bundle = relevant.groupby("bundle_code")["fries_units"].sum().to_dict()
 
     # Calculate today's meat units and fries orders
-    today_sales = margins_df[margins_df["sale_date"] == ref_date]
-    total_meat = 0
-    total_fries = 0
-    for _, row in today_sales.iterrows():
-        qty = row["quantity"]
-        bc = row.get("bundle_code")
-        pc = row.get("product_code")
-        if pd.notna(bc):
-            total_meat += meat_per_bundle.get(bc, 0) * qty
-            total_fries += fries_per_bundle.get(bc, 0) * qty
-        else:
-            total_meat += meat_per_product.get(pc, 0) * qty
-            if pc == "fries_full":
-                total_fries += qty
+    today_sales = margins_df[margins_df["sale_date"] == ref_date].copy()
+    has_bundle = today_sales["bundle_code"].notna()
+    today_sales["meat_units"] = (
+        today_sales["bundle_code"].map(meat_per_bundle).fillna(0) * today_sales["quantity"]
+    ).where(has_bundle, today_sales["product_code"].map(meat_per_product).fillna(0) * today_sales["quantity"])
+    today_sales["fries_units"] = (
+        today_sales["bundle_code"].map(fries_per_bundle).fillna(0) * today_sales["quantity"]
+    ).where(has_bundle, today_sales["quantity"].where(today_sales["product_code"] == "fries_full", 0))
+    total_meat = today_sales["meat_units"].sum()
+    total_fries = today_sales["fries_units"].sum()
 
     venta_por_carne = ventas_total / total_meat if total_meat > 0 else 0
     ratio_carne_papas = total_meat / total_fries if total_fries > 0 else 0
@@ -453,19 +442,22 @@ else:
             .sort_values("monto", ascending=False)
         )
 
-        rows_html = ""
-        for _, row in individual.iterrows():
-            rows_html += f"""
+        rows_html = "".join(
+            f"""
     <div style="display: flex; justify-content: space-between; align-items: baseline;
                 padding: 8px 12px; border-bottom: 1px solid #e0e0e0;">
         <div>
-            <span style="font-size: 14px; color: #31333F;">{row['descripcion']}</span>
-            <span style="font-size: 12px; color: #888; margin-left: 6px;">{row['categoria']}</span>
+            <span style="font-size: 14px; color: #31333F;">{desc}</span>
+            <span style="font-size: 12px; color: #888; margin-left: 6px;">{cat}</span>
         </div>
         <span style="font-size: 14px; font-weight: 600; color: #31333F; white-space: nowrap;">
-            {formato_moneda(row['monto'])}
+            {formato_moneda(monto)}
         </span>
     </div>"""
+            for desc, cat, monto in zip(
+                individual["descripcion"], individual["categoria"], individual["monto"]
+            )
+        )
 
         st.markdown(
             f'<div style="margin-bottom: 20px;">{rows_html}\n</div>',
@@ -625,19 +617,16 @@ if not margins_df.empty and not recipes_df.empty and not ingredients_df.empty:
     week_sales = margins_df[
         (margins_df["sale_date"] >= week_start) & (margins_df["sale_date"] <= ref_date)
     ]
-    week_meat = 0
-    week_fries = 0
-    for _, row in week_sales.iterrows():
-        qty = row["quantity"]
-        bc = row.get("bundle_code")
-        pc = row.get("product_code")
-        if pd.notna(bc):
-            week_meat += meat_per_bundle.get(bc, 0) * qty
-            week_fries += fries_per_bundle.get(bc, 0) * qty
-        else:
-            week_meat += meat_per_product.get(pc, 0) * qty
-            if pc == "fries_full":
-                week_fries += qty
+    week_sales = week_sales.copy()
+    has_bundle_w = week_sales["bundle_code"].notna()
+    week_sales["meat_units"] = (
+        week_sales["bundle_code"].map(meat_per_bundle).fillna(0) * week_sales["quantity"]
+    ).where(has_bundle_w, week_sales["product_code"].map(meat_per_product).fillna(0) * week_sales["quantity"])
+    week_sales["fries_units"] = (
+        week_sales["bundle_code"].map(fries_per_bundle).fillna(0) * week_sales["quantity"]
+    ).where(has_bundle_w, week_sales["quantity"].where(week_sales["product_code"] == "fries_full", 0))
+    week_meat = week_sales["meat_units"].sum()
+    week_fries = week_sales["fries_units"].sum()
 
     week_venta_por_carne = week_ventas / week_meat if week_meat > 0 else 0
     week_ratio_carne_papas = week_meat / week_fries if week_fries > 0 else 0
