@@ -40,7 +40,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🎧 Tu Año en Ventas")
+st.title("Tu Año en Ventas")
 st.caption("Un recorrido por tu año comercial")
 
 if demo.is_demo_mode():
