@@ -8,6 +8,7 @@ Start with:
 """
 
 import os
+import string
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Optional
@@ -16,11 +17,39 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
-_DATA_DIR = (
-    Path("data/demo") if os.getenv("DEMO_MODE", "").lower() == "true"
-    else Path("data/analytics")
-)
+_DEMO: bool = os.getenv("DEMO_MODE", "").lower() == "true"
+_DATA_DIR = Path("data/demo") if _DEMO else Path("data/analytics")
 PARQUET_PATH = _DATA_DIR / "fact_sales_margin.parquet"
+
+# Stable product-name → generic-label mapping, built once at startup.
+# Mirrors the logic in dashboard/demo.py so labels are identical.
+_PRODUCT_MAP: dict[str, str] = {}
+
+
+def _letter(n: int) -> str:
+    """0→A, 1→B, …, 25→Z, 26→AA, … (mirrors demo.py)"""
+    result = ""
+    n += 1
+    while n > 0:
+        n, rem = divmod(n - 1, 26)
+        result = string.ascii_uppercase[rem] + result
+    return result
+
+
+def _build_product_map(df: pd.DataFrame) -> None:
+    """Populate _PRODUCT_MAP from all unique product names (sorted).
+
+    Called at startup so every request gets the same mapping regardless
+    of which date range is queried.
+    """
+    global _PRODUCT_MAP
+    if _PRODUCT_MAP:
+        return
+    _PRODUCT_MAP = {
+        name: f"Producto {_letter(i)}"
+        for i, name in enumerate(sorted(df["product_name"].dropna().unique()))
+    }
+
 
 app = FastAPI(title="QSR Analytics API")
 
@@ -33,6 +62,9 @@ def _debug_parquet() -> None:
         print("\n=== fact_sales_margin — first 5 rows ===")
         print(df.head().to_string())
         print(f"shape: {df.shape}  |  sale_date range: {df['sale_date'].min().date()} → {df['sale_date'].max().date()}\n")
+        if _DEMO:
+            _build_product_map(df)
+            print(f"DEMO_MODE active — {len(_PRODUCT_MAP)} products mapped\n")
 
 
 # ============================================================
@@ -143,4 +175,10 @@ def margins_by_product(
     grouped["margin_pct"] = (
         grouped["gross_margin"] / grouped["revenue"].replace(0.0, float("nan"))
     ).fillna(0.0)
+    if _DEMO:
+        # Build map lazily in case startup didn't run (e.g. tests / direct calls)
+        _build_product_map(df)
+        grouped["product_name"] = (
+            grouped["product_name"].map(_PRODUCT_MAP).fillna(grouped["product_name"])
+        )
     return grouped.to_dict(orient="records")
