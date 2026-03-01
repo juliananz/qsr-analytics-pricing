@@ -1,10 +1,15 @@
 import streamlit as st
 import pandas as pd
 
+import demo
+
 st.set_page_config(page_title="Paquetes", layout="centered")
 
 
 st.title("📦 Paquetes")
+
+if demo.is_demo_mode():
+    demo.banner()
 
 # =================================================
 # Carga de datos
@@ -23,7 +28,8 @@ def load_bundle_mapping():
     return bundle_dict
 
 df = load_data()
-bundle_names = load_bundle_mapping()
+df = demo.apply_margins(df)
+bundle_names = demo.apply_bundle_names(load_bundle_mapping())
 
 # =================================================
 # Filtro de periodo

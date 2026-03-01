@@ -2,10 +2,15 @@ import streamlit as st
 import pandas as pd
 from datetime import timedelta
 
+import demo
+
 st.set_page_config(page_title="Productos", layout="centered")
 
 
 st.title("📦 Productos")
+
+if demo.is_demo_mode():
+    demo.banner()
 
 # =================================================
 # Carga de datos
@@ -17,6 +22,7 @@ def load_data():
     return df
 
 df = load_data()
+df = demo.apply_margins(df)
 
 # =================================================
 # Filtro de periodo

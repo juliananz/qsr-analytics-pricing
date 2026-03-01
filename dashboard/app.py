@@ -4,6 +4,8 @@ from datetime import date
 import streamlit as st
 import pandas as pd
 
+import demo
+
 _ANALYTICS_DIR = (
     "data/demo" if os.getenv("DEMO_MODE", "").lower() == "true"
     else "data/analytics"
@@ -140,6 +142,11 @@ cortes_df = load_cortes()
 gastos_df = load_gastos()
 margins_df = load_margins()
 
+# Apply demo anonymization (no-op when DEMO_MODE is not set)
+cortes_df = demo.apply_cortes(cortes_df)
+gastos_df = demo.apply_gastos(gastos_df)
+margins_df = demo.apply_margins(margins_df)
+
 if not margins_df.empty:
     _last_date = margins_df["sale_date"].max().date()
     _days_old = (date.today() - _last_date).days
@@ -158,6 +165,9 @@ ingredients_df = load_ingredient_costs()
 # Estado vacio: sin cortes
 # =================================================
 st.title("Hoy")
+
+if demo.is_demo_mode():
+    demo.banner()
 
 if margins_df.empty:
     st.info(

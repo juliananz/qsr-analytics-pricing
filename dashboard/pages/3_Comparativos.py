@@ -3,6 +3,8 @@ import pandas as pd
 from datetime import timedelta
 import plotly.graph_objects as go
 
+import demo
+
 # =================================================
 # Configuración general
 # =================================================
@@ -14,6 +16,9 @@ st.set_page_config(
 
 st.title("📊 Comparativos")
 
+if demo.is_demo_mode():
+    demo.banner()
+
 # =================================================
 # Carga de datos
 # =================================================
@@ -24,6 +29,7 @@ def load_data():
     return df
 
 df = load_data()
+df = demo.apply_margins(df)
 
 # =================================================
 # Fecha de corte (último día con ventas)

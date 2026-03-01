@@ -4,6 +4,8 @@ from datetime import datetime
 import plotly.graph_objects as go
 import plotly.express as px
 
+import demo
+
 st.set_page_config(page_title="2025 en corto", layout="centered")
 
 
@@ -40,6 +42,9 @@ st.markdown("""
 
 st.title("🎧 Tu Año en Ventas")
 st.caption("Un recorrido por tu año comercial")
+
+if demo.is_demo_mode():
+    demo.banner()
 
 # =================================================
 # Disponibilidad temporal
@@ -90,6 +95,7 @@ def load_data():
     return df
 
 df = load_data()
+df = demo.apply_margins(df)
 
 # =================================================
 # Definir periodo comparable
