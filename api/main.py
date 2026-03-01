@@ -7,6 +7,7 @@ Start with:
     uvicorn api.main:app --reload
 """
 
+import os
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Optional
@@ -15,7 +16,11 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
-PARQUET_PATH = Path("data/analytics/fact_sales_margin.parquet")
+_DATA_DIR = (
+    Path("data/demo") if os.getenv("DEMO_MODE", "").lower() == "true"
+    else Path("data/analytics")
+)
+PARQUET_PATH = _DATA_DIR / "fact_sales_margin.parquet"
 
 app = FastAPI(title="QSR Analytics API")
 

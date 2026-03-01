@@ -1,7 +1,13 @@
+import os
 from datetime import date
 
 import streamlit as st
 import pandas as pd
+
+_ANALYTICS_DIR = (
+    "data/demo" if os.getenv("DEMO_MODE", "").lower() == "true"
+    else "data/analytics"
+)
 
 # =================================================
 # Configuracion de pagina (debe ser la primera llamada)
@@ -79,7 +85,7 @@ def load_gastos():
 @st.cache_data
 def load_margins():
     try:
-        df = pd.read_parquet("data/analytics/fact_sales_margin.parquet")
+        df = pd.read_parquet(f"{_ANALYTICS_DIR}/fact_sales_margin.parquet")
         df["sale_date"] = pd.to_datetime(df["sale_date"])
         return df
     except FileNotFoundError:
