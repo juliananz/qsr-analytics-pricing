@@ -1,24 +1,32 @@
 """
 Demo mode: anonymize data for safe public/demo presentations.
 
-Usage
------
-Set the environment variable DEMO_MODE=true before launching Streamlit.
+Usage (local)
+-------------
+DEMO_MODE=true streamlit run dashboard/app.py
+
+Usage (Streamlit Community Cloud)
+----------------------------------
+In the app's Secrets section add:  DEMO_MODE = "true"
+
 When active, this module:
   - Shows a banner on every page
   - Replaces product/bundle names with generic labels (consistent per session)
   - Replaces employee/supplier names with generic labels
-  - Scales all revenue and quantity figures by a fixed per-session random factor (0.8–1.2)
+  - Divides all revenue and quantity figures by a constant factor of 13
 """
 
 import os
-import random
 import string
 
 import pandas as pd
 import streamlit as st
 
-_DEMO: bool = os.getenv("DEMO_MODE", "").lower() == "true"
+# Constant divisor applied to all monetary and quantity figures in demo mode
+_SCALER: float = 1 / 13
+
+# Fast path: env var is available at import time
+_DEMO_ENV: bool = os.getenv("DEMO_MODE", "").lower() == "true"
 
 
 # ---------------------------------------------------------------------------
@@ -26,7 +34,15 @@ _DEMO: bool = os.getenv("DEMO_MODE", "").lower() == "true"
 # ---------------------------------------------------------------------------
 
 def is_demo_mode() -> bool:
-    return _DEMO
+    """Return True if DEMO_MODE is active (env var or Streamlit secret)."""
+    if _DEMO_ENV:
+        return True
+    # Fallback: Streamlit Community Cloud exposes secrets via st.secrets,
+    # not as OS environment variables.
+    try:
+        return str(st.secrets.get("DEMO_MODE", "")).lower() == "true"
+    except Exception:
+        return False
 
 
 def banner() -> None:
@@ -36,14 +52,13 @@ def banner() -> None:
 
 def apply_margins(df: pd.DataFrame) -> pd.DataFrame:
     """Scale revenue/quantity columns and anonymize product names."""
-    if not _DEMO or df.empty:
+    if not is_demo_mode() or df.empty:
         return df
     _init_session()
     df = df.copy()
-    k = st.session_state._demo_scaler
     for col in ("net_amount", "quantity", "gross_margin"):
         if col in df.columns:
-            df[col] = df[col] * k
+            df[col] = df[col] * _SCALER
     if "product_name" in df.columns:
         _ensure_mapped(
             df["product_name"].dropna().unique(),
@@ -61,7 +76,7 @@ def apply_margins(df: pd.DataFrame) -> pd.DataFrame:
 
 def apply_bundle_names(bundle_dict: dict) -> dict:
     """Anonymize a {bundle_code: display_name} mapping dict."""
-    if not _DEMO:
+    if not is_demo_mode():
         return bundle_dict
     _init_session()
     _ensure_mapped(
@@ -77,13 +92,12 @@ def apply_bundle_names(bundle_dict: dict) -> dict:
 
 def apply_gastos(df: pd.DataFrame) -> pd.DataFrame:
     """Scale monto and anonymize descripcion/proveedor in gastos."""
-    if not _DEMO or df.empty:
+    if not is_demo_mode() or df.empty:
         return df
     _init_session()
     df = df.copy()
-    k = st.session_state._demo_scaler
     if "monto" in df.columns:
-        df["monto"] = df["monto"] * k
+        df["monto"] = df["monto"] * _SCALER
     if "descripcion" in df.columns:
         is_employee = (
             df.get("categoria", pd.Series("", index=df.index))
@@ -118,14 +132,13 @@ def apply_gastos(df: pd.DataFrame) -> pd.DataFrame:
 
 def apply_cortes(df: pd.DataFrame) -> pd.DataFrame:
     """Scale all monetary figures in cortes."""
-    if not _DEMO or df.empty:
+    if not is_demo_mode() or df.empty:
         return df
     _init_session()
     df = df.copy()
-    k = st.session_state._demo_scaler
     for col in ("ventas_efectivo", "ventas_tarjeta", "ventas_app", "gastos_caja", "ventas_sistema"):
         if col in df.columns:
-            df[col] = df[col] * k
+            df[col] = df[col] * _SCALER
     return df
 
 
@@ -144,10 +157,9 @@ def _letter(n: int) -> str:
 
 
 def _init_session() -> None:
-    """Initialize demo state in st.session_state exactly once per session."""
+    """Initialize demo name-mapping dicts in session_state once per session."""
     if "_demo_initialized" not in st.session_state:
         st.session_state._demo_initialized = True
-        st.session_state._demo_scaler = random.uniform(0.8, 1.2)
         st.session_state._demo_product_map: dict[str, str] = {}
         st.session_state._demo_bundle_map: dict[str, str] = {}
         st.session_state._demo_person_map: dict[str, str] = {}
