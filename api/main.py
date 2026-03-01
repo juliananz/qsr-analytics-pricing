@@ -25,6 +25,16 @@ PARQUET_PATH = _DATA_DIR / "fact_sales_margin.parquet"
 app = FastAPI(title="QSR Analytics API")
 
 
+@app.on_event("startup")
+def _debug_parquet() -> None:
+    """Print first 5 rows on startup so the data shape is visible in logs."""
+    if PARQUET_PATH.exists():
+        df = pd.read_parquet(PARQUET_PATH)
+        print("\n=== fact_sales_margin — first 5 rows ===")
+        print(df.head().to_string())
+        print(f"shape: {df.shape}  |  sale_date range: {df['sale_date'].min().date()} → {df['sale_date'].max().date()}\n")
+
+
 # ============================================================
 # Response models
 # ============================================================
@@ -86,8 +96,11 @@ def health():
 @app.get("/summary/daily", response_model=list[DailyRecord])
 def summary_daily(days: int = Query(30, ge=1, le=365)):
     df = _require_parquet()
-    cutoff = date.today() - timedelta(days=days)
-    df = df[df["sale_date"].dt.date >= cutoff]
+    # Anchor to the data's own max date so the endpoint returns real rows
+    # even when the pipeline hasn't run recently.
+    max_date = df["sale_date"].max()
+    cutoff = max_date - pd.Timedelta(days=days)
+    df = df[df["sale_date"] >= cutoff]
     grouped = (
         df.groupby("sale_date")
         .agg(
