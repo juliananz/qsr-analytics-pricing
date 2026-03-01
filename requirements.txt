@@ -22,7 +22,6 @@ dash-html-components==2.0.0
 dash-table==5.0.0
 dbfread==2.0.7
 deep-translator==1.11.4
-et_xmlfile @ file:///home/conda/feedstock_root/build_artifacts/et_xmlfile_1733749653422/work
 fanstatic==1.5
 folium==0.16.0
 geographiclib==2.0
@@ -46,10 +45,10 @@ MarkupSafe==3.0.3
 mercantile==1.2.1
 multitasking==0.0.11
 narwhals==2.15.0
-numpy @ file:///D:/bld/bld/rattler-build_numpy_1766373812/work/dist/numpy-2.4.0-cp311-cp311-win_amd64.whl#sha256=73a288d2179f5f1426c99bf90b3cc81232ae8e94579705bb5e5219a716553cd8
-openpyxl @ file:///D:/bld/openpyxl_1757332076971/work
+numpy==2.4.0
+openpyxl>=3.1.0
 packaging==26.0
-pandas @ file:///D:/bld/pandas_1764614503455/work
+pandas>=2.2.0
 pdfminer.six==20231228
 pdfplumber==0.11.4
 peewee==3.18.1
@@ -67,9 +66,7 @@ PyPDF2==3.0.1
 pypdfium2==4.30.0
 pypng==0.20220715.0
 pyproj==3.6.1
-python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_python-dateutil_1751104122/work
 python-docx==1.1.2
-pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1742920838005/work
 pywin32-ctypes==0.2.3
 qrcode==7.4.2
 rasterio==1.3.10
@@ -78,7 +75,6 @@ requests==2.32.5
 retrying==1.3.4
 rpds-py==0.30.0
 simpledbf==0.2.6
-six @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_six_1753199211/work
 smmap==5.0.2
 snuggs==1.4.7
 sqlparse==0.5.3
@@ -90,7 +86,6 @@ toml==0.10.2
 tornado==6.5.4
 ttkthemes==3.2.2
 typing_extensions==4.15.0
-tzdata @ file:///home/conda/feedstock_root/build_artifacts/python-tzdata_1765719872007/work
 urllib3==2.6.3
 watchdog==6.0.0
 WebOb==1.8.9
@@ -101,7 +96,6 @@ xmltodict==0.14.2
 yfinance==0.2.61
 fastapi
 uvicorn[standard]
-httpx
 sniffio
 gspread>=6.2.1
 google-auth>=2.48.0
