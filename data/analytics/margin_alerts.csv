@@ -1,14 +1,2 @@
 product_code,bundle_code,total_sales,total_units,total_cost,gross_margin,gross_margin_pct,alert_type
- astropapa,,45915.0,435,0.0,0.0,0.0,LOW_MARGIN
- brownie,,7000.0,175,0.0,0.0,0.0,LOW_MARGIN
- burger_chicken,,14295.0,178,0.0,0.0,0.0,LOW_MARGIN
- burger_double_cheese,,274161.0,2608,0.0,0.0,0.0,LOW_MARGIN
- burger_plain,,9080.0,121,0.0,0.0,0.0,LOW_MARGIN
- fries_half,,17904.0,414,0.0,0.0,0.0,LOW_MARGIN
- hotdog,,18156.0,465,0.0,0.0,0.0,LOW_MARGIN
- palomas_beef,,9199.0,82,0.0,0.0,0.0,LOW_MARGIN
- palomas_pork,,8185.0,73,0.0,0.0,0.0,LOW_MARGIN
- tornillos,,29922.0,264,0.0,0.0,0.0,LOW_MARGIN
- torta_beef,,20601.0,183,0.0,0.0,0.0,LOW_MARGIN
- torta_pork,,69566.0,619,0.0,0.0,0.0,LOW_MARGIN
-,,6886.0,44,0.0,0.0,0.0,LOW_MARGIN
+soda,,283600.0,12048.0,233369.76,50230.23999999999,0.1771165021156558,LOW_MARGIN

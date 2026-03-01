@@ -39,7 +39,15 @@ def main():
     print("\nStarting QSR Analytics Pipeline")
 
     # -------------------------------
-    # INGESTIÓN DE VENTAS
+    # 1. INGESTIÓN GOOGLE SHEETS
+    # -------------------------------
+    run_step(
+        "Ingesting Google Sheets (Cortes + Gastos)",
+        "scripts/ingest_google_sheets.py"
+    )
+
+    # -------------------------------
+    # 2. INGESTIÓN DE VENTAS POS
     # -------------------------------
     if args.rebuild_sales:
         run_step(

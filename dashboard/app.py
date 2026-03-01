@@ -153,28 +153,31 @@ ingredients_df = load_ingredient_costs()
 # =================================================
 st.title("Hoy")
 
-if cortes_df.empty:
+if margins_df.empty:
     st.info(
-        "No hay cortes registrados. "
-        "Cuando se registre el primer corte de caja, "
+        "No hay datos de ventas disponibles. "
+        "Cuando se procese el primer archivo POS, "
         "aqui veras el resumen del dia."
     )
     st.stop()
 
 # =================================================
-# Fecha de referencia (ultimo dia con corte)
+# Fecha de referencia (ultimo dia con datos POS)
 # =================================================
-ref_date = cortes_df["fecha"].max().normalize()
+ref_date = margins_df["sale_date"].max().normalize()
 st.caption(formato_fecha(ref_date))
 
-today_row = cortes_df[cortes_df["fecha"] == ref_date].iloc[0]
+_today_cortes = cortes_df[cortes_df["fecha"] == ref_date] if not cortes_df.empty else pd.DataFrame()
+today_row = _today_cortes.iloc[0] if not _today_cortes.empty else None
+if today_row is None:
+    st.caption("Corte de caja aun no registrado para este dia.")
 
 # =================================================
 # Seccion 1: Ventas del dia + Ganancia esperada
 # =================================================
-ventas_efectivo = today_row["ventas_efectivo"]
-ventas_tarjeta = today_row["ventas_tarjeta"]
-ventas_app = today_row["ventas_app"]
+ventas_efectivo = today_row["ventas_efectivo"] if today_row is not None else 0
+ventas_tarjeta = today_row["ventas_tarjeta"] if today_row is not None else 0
+ventas_app = today_row["ventas_app"] if today_row is not None else 0
 ventas_total = ventas_efectivo + ventas_tarjeta + ventas_app
 
 if not margins_df.empty:
@@ -285,15 +288,16 @@ st.markdown(
 # =================================================
 # Seccion 2b: Cuadre de caja (sistema vs calculado)
 # =================================================
-ventas_sistema = today_row["ventas_sistema"]
-ventas_calculadas = (
-    ventas_efectivo + ventas_tarjeta + ventas_app + today_row["gastos_caja"]
-)
-diferencia_cuadre = ventas_calculadas - ventas_sistema
-color_dif = "#09ab3b" if diferencia_cuadre == 0 else "#ff4b4b"
+if today_row is not None:
+    ventas_sistema = today_row["ventas_sistema"]
+    ventas_calculadas = (
+        ventas_efectivo + ventas_tarjeta + ventas_app + today_row["gastos_caja"]
+    )
+    diferencia_cuadre = ventas_calculadas - ventas_sistema
+    color_dif = "#09ab3b" if diferencia_cuadre == 0 else "#ff4b4b"
 
-st.markdown(
-    f"""
+    st.markdown(
+        f"""
 <div style="display: flex; gap: 8px; margin-bottom: 20px;">
     <div style="flex: 1; background-color: #f0f2f6; padding: 12px;
                 border-radius: 8px; text-align: center;">
@@ -318,8 +322,8 @@ st.markdown(
     </div>
 </div>
 """,
-    unsafe_allow_html=True,
-)
+        unsafe_allow_html=True,
+    )
 
 # =================================================
 # Seccion 2c: KPIs de carnes y papas

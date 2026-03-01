@@ -4,21 +4,21 @@
 
 All commands must be run from the project root. All file paths in the scripts are relative.
 
-Google Sheets ingestion runs separately from the POS pipeline. To pull the latest Cortes and Gastos data from the spreadsheet:
+The pipeline runs in this order:
 
-```
-python scripts/ingest_google_sheets.py
-```
+1. `ingest_google_sheets.py` — pulls Cortes and Gastos from the Google Sheet, writes `data/raw_data/cortes_validated.csv` and `data/raw_data/gastos_validated.csv`
+2. `build_fact_sales_incremental.py` — appends new POS rows from `data/raw_data/comandas.xlsx` into `data/analytics/fact_sales_raw.parquet`
+3. `build_fact_sales_margin.py` — computes unit costs and margins, writes `data/analytics/fact_sales_margin.parquet`
 
-This requires credentials. The script resolves them in this order: the `GOOGLE_CREDENTIALS_JSON` environment variable (a JSON string), then `GOOGLE_CREDENTIALS_PATH` (a path to a service account file), then `credentials_path` in `config/sheets.yaml`. Locally, `config/sheets.yaml` points to a Windows path at `D:\DS\Astro Burger\Negocio\astroburger-a7b14d51c891.json`. If that file isn't on your machine, use the env var instead. The script writes `data/raw_data/cortes_validated.csv` and `data/raw_data/gastos_validated.csv`. If validation fails for any sheet, nothing is written.
-
-To run the main pipeline (incremental POS + margins + summary + alerts):
+All three steps run automatically when you call:
 
 ```
 python run_pipeline.py
 ```
 
-This assumes `data/analytics/fact_sales_raw.parquet` already exists and `data/raw_data/comandas.xlsx` contains new data beyond the last date in the parquet. If you need to rebuild the raw sales file from scratch using all historical POS files in `data/raw_data/POS/`:
+Google Sheets credentials are required for step 1. The script resolves them in this order: the `GOOGLE_CREDENTIALS_JSON` environment variable (a JSON string), then `GOOGLE_CREDENTIALS_PATH` (a path to a service account file), then `credentials_path` in `config/sheets.yaml`. Locally, `config/sheets.yaml` points to a Windows path at `D:\DS\Astro Burger\Negocio\astroburger-a7b14d51c891.json`. If that file isn't on your machine, use the env var instead.
+
+`run_pipeline.py` assumes `data/analytics/fact_sales_raw.parquet` already exists and `data/raw_data/comandas.xlsx` contains new data beyond the last date in the parquet. If you need to rebuild the raw sales file from scratch using all historical POS files in `data/raw_data/POS/`:
 
 ```
 python run_pipeline.py --rebuild-sales

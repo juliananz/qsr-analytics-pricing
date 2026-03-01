@@ -103,3 +103,5 @@ fastapi
 uvicorn[standard]
 httpx
 sniffio
+gspread>=6.2.1
+google-auth>=2.48.0

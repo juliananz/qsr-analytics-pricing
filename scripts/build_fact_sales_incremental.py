@@ -39,6 +39,12 @@ def main():
 
     new = new[EXPECTED_COLUMNS].copy()
 
+    # Cast string columns to match historical parquet schema
+    for col in ["foliocomanda", "foliocuenta", "orden", "mesero", "claveproducto", "descripcion"]:
+        new[col] = new[col].astype(str)
+    for col in ["cantidad", "descuento", "importe"]:
+        new[col] = pd.to_numeric(new[col], errors="coerce")
+
     new["fechaapertura"] = pd.to_datetime(new["fechaapertura"], errors="coerce")
     new = new[new["fechaapertura"].notna()]
 

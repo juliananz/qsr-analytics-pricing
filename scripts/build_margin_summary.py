@@ -8,8 +8,8 @@ OUTPUT_FILE = Path("data/analytics/margin_summary.csv")
 def main():
     sales = pd.read_parquet(INPUT_FILE)
 
-    # Solo ventas con costos válidos
-    sales = sales[sales["cost_applicable"]].copy()
+    # Solo ventas con costos conocidos (excluir estimados)
+    sales = sales[~sales["cost_estimated"]].copy()
 
     # Excluir ingresos no operativos
     sales = sales[~sales["non_product_revenue"]]
@@ -18,8 +18,8 @@ def main():
         sales
         .groupby(["product_code", "bundle_code"], dropna=False)
         .agg(
-            total_sales=("importe", "sum"),
-            total_units=("cantidad", "sum"),
+            total_sales=("net_amount", "sum"),
+            total_units=("quantity", "sum"),
             total_cost=("total_cost", "sum"),
             gross_margin=("gross_margin", "sum"),
         )

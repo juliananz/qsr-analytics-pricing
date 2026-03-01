@@ -248,7 +248,7 @@ def validate_cortes(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
         df[col] = pd.to_numeric(df[col].astype(str).str.replace(",", ""), errors="coerce")
         invalid = df[(df[col].isna()) | (df[col] < 0)]
         for idx in invalid.index:
-            orig_val = original_vals.iloc[idx]
+            orig_val = original_vals.loc[idx]
             if pd.isna(df.loc[idx, col]):
                 errors.append(f"Row {idx + 2}: {col} is not a valid number ('{orig_val}')")
             else:

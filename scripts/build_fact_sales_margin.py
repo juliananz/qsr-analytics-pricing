@@ -40,6 +40,8 @@ PRODUCT_COST_FILE = Path("data/processed_data/product_unit_cost.csv")
 BUNDLE_COST_FILE = Path("data/processed_data/bundle_unit_cost.csv")
 MAPPING_FILE = Path("data/processed_data/product_name_mapping.csv")
 EXPECTED_DRINK_COST_FILE = Path("data/processed_data/expected_drink_cost.csv")
+CORTES_FILE = Path("data/raw_data/cortes_validated.csv")
+GASTOS_FILE = Path("data/raw_data/gastos_validated.csv")
 
 OUTPUT_FILE = Path("data/analytics/fact_sales_margin.parquet")
 
@@ -434,6 +436,35 @@ def main():
     logger.info("[6/6] Building output")
 
     output = build_output_dataframe(sales)
+
+    # --------------------------------------------------------
+    # 6b. JOIN CON CORTES Y GASTOS
+    # POS es la fuente de verdad para fechas (left join).
+    # Fechas en POS sin cortes/gastos -> nulls en esas columnas.
+    # Fechas en cortes/gastos sin POS -> se descartan.
+    # --------------------------------------------------------
+    if CORTES_FILE.exists():
+        cortes = pd.read_csv(CORTES_FILE)
+        cortes["sale_date"] = pd.to_datetime(cortes["fecha"]).dt.normalize()
+        cortes = cortes.drop(columns=["fecha"])
+        output = output.merge(cortes, on="sale_date", how="left")
+        logger.info("  Joined cortes: %s dates covered", cortes["sale_date"].nunique())
+    else:
+        logger.warning("Cortes file not found, skipping join: %s", CORTES_FILE)
+
+    if GASTOS_FILE.exists():
+        gastos = pd.read_csv(GASTOS_FILE)
+        gastos_daily = (
+            gastos
+            .assign(sale_date=pd.to_datetime(gastos["fecha"]).dt.normalize())
+            .groupby("sale_date", as_index=False)["monto"]
+            .sum()
+            .rename(columns={"monto": "total_gastos_dia"})
+        )
+        output = output.merge(gastos_daily, on="sale_date", how="left")
+        logger.info("  Joined gastos: %s dates covered", gastos_daily["sale_date"].nunique())
+    else:
+        logger.warning("Gastos file not found, skipping join: %s", GASTOS_FILE)
 
     # Guardar
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
